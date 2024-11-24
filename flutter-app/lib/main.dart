@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/navigation.dart';
 import 'package:tremors/theme.dart';
 import 'package:tremors/tremors_page.dart';
@@ -18,13 +19,21 @@ void main() async {
       routerConfig: GoRouter(
         navigatorKey: rootKey,
         routes: [
-          ShellRoute(
+          StatefulShellRoute.indexedStack(
             builder: (context, state, child) => TremorsPage(child: child),
-            routes: [
-              GoRoute(path: '/', builder: mainPage),
-              GoRoute(path: '/layers', builder: layersPage),
-              GoRoute(path: '/search', builder: searchPage),
-              GoRoute(path: '/settings', builder: settingsPage),
+            branches: [
+              StatefulShellBranch(
+                routes: [GoRoute(path: '/', builder: mapPage)],
+              ),
+              StatefulShellBranch(
+                routes: [GoRoute(path: '/layers', builder: layersPage)],
+              ),
+              StatefulShellBranch(
+                routes: [GoRoute(path: '/search', builder: searchPage)],
+              ),
+              StatefulShellBranch(
+                routes: [GoRoute(path: '/settings', builder: settingsPage)],
+              ),
             ],
           )
         ],
@@ -32,6 +41,9 @@ void main() async {
 
   runApp(Provider.value(
     value: tremorsTheme,
-    child: app,
+    child: MultiProvider(
+      providers: [ChangeNotifierProvider(create: MapManager.create)],
+      child: app,
+    ),
   ));
 }

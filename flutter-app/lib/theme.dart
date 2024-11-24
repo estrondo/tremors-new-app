@@ -19,25 +19,54 @@ class TremorsTextTheme {}
 
 TremorsTheme createTremorsTheme() {
   const primary = Color(0xff008fff);
-
-  final themeData = ThemeData(
-    colorScheme: ColorScheme.fromSeed(
-      seedColor: primary,
-      primary: primary,
-      error: const Color(0xffff0054),
-      secondary: const Color(0xff1a656d),
-      surface: const Color(0xffffffff),
-      outline: const Color(0xffb1b2b5),
-      outlineVariant: const Color(0xffeceded),
-      onSurface: const Color(0xff031728),
-      onPrimary: const Color(0xffe9f4ff),
-      onError: const Color(0xffffe2fa),
-    ),
-    textTheme: GoogleFonts.barlowCondensedTextTheme(),
+  final colorScheme = ColorScheme.fromSeed(
+    seedColor: primary,
+    primary: primary,
+    error: const Color(0xffff0054),
+    secondary: const Color(0xff1a656d),
+    surface: const Color(0xffffffff),
+    outline: const Color(0xffb1b2b5),
+    outlineVariant: const Color(0xffeceded),
+    onSurface: const Color(0xff031728),
+    onPrimary: const Color(0xffe9f4ff),
+    onError: const Color(0xffffe2fa),
   );
 
+  final textTheme = GoogleFonts.barlowCondensedTextTheme();
+
+  final menuBarSelectedStyle =
+      textTheme.bodySmall!.copyWith(color: colorScheme.onSurface);
+
+  final navigationBarIconTheme = IconThemeData(
+    size: 25,
+    weight: 900,
+    color: colorScheme.onSurface,
+  );
+  final selectedNavigationBarIconTheme =
+      navigationBarIconTheme.copyWith(color: colorScheme.onPrimary);
+
+  final navBarTheme = NavigationBarThemeData(
+      shadowColor: Colors.amber,
+      backgroundColor: colorScheme.surface,
+      indicatorColor: colorScheme.primary,
+      height: 55,
+      iconTheme: WidgetStateProperty.resolveWith(
+        (stateSet) => stateSet.contains(WidgetState.selected)
+            ? selectedNavigationBarIconTheme
+            : navigationBarIconTheme,
+      ),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (stateSet) => stateSet.contains(WidgetState.selected)
+            ? menuBarSelectedStyle
+            : null,
+      ));
+
   return TremorsTheme(
-    themeData: themeData,
+    themeData: ThemeData(
+      colorScheme: colorScheme,
+      textTheme: textTheme,
+      navigationBarTheme: navBarTheme,
+    ),
     colorScheme: TremorsColorScheme(),
     textTheme: TremorsTextTheme(),
   );

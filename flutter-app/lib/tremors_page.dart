@@ -2,19 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tremors/extensions.dart';
 
-class TremorsPage extends StatefulWidget {
+const destinations = ['/', '/layers', '/search', '/settings'];
+
+class TremorsPage extends StatelessWidget {
   final Widget child;
 
   const TremorsPage({super.key, required this.child});
-
-  @override
-  State<TremorsPage> createState() => _TremorsPage();
-}
-
-const destinations = ['/layers', '/search', '/settings'];
-
-class _TremorsPage extends State<TremorsPage> {
-  int _current = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -22,42 +15,56 @@ class _TremorsPage extends State<TremorsPage> {
       color: context.colorScheme.surface,
       child: Column(
         children: [
-          Expanded(child: Center(child: widget.child)),
+          Expanded(child: Center(child: child)),
           _createNavigationBar(context),
         ],
       ),
     );
   }
 
-  void _selectDestination(BuildContext context, int current) {
-    setState(() {
-      _current = current;
-      context.go(destinations[current]);
-    });
+  void _go(BuildContext context, int current) {
+    context.go(destinations[current]);
   }
 
   NavigationBar _createNavigationBar(BuildContext context) {
-    final colorScheme = context.colorScheme;
+    final routeState = GoRouterState.of(context);
+
+    final index = destinations.indexOf(routeState.matchedLocation);
+
+    NavigationDestination destination(
+      IconData icon,
+      IconData selectedIcon,
+      String label,
+    ) =>
+        NavigationDestination(
+          icon: Icon(icon),
+          selectedIcon: Icon(selectedIcon),
+          label: label,
+        );
 
     return NavigationBar(
-      onDestinationSelected: (i) => _selectDestination(context, i),
-      selectedIndex: _current,
-      indicatorColor: colorScheme.outline,
-      destinations: const [
-        NavigationDestination(
-          icon: Icon(Icons.layers_outlined),
-          selectedIcon: Icon(Icons.layers),
-          label: 'Layers',
+      onDestinationSelected: (i) => _go(context, i),
+      selectedIndex: index >= 0 ? index : 0,
+      destinations: [
+        destination(
+          Icons.map_outlined,
+          Icons.map,
+          'Home',
         ),
-        NavigationDestination(
-          icon: Icon(Icons.search_outlined),
-          selectedIcon: Icon(Icons.search),
-          label: 'Search',
+        destination(
+          Icons.layers_outlined,
+          Icons.layers,
+          'Layers',
         ),
-        NavigationDestination(
-          icon: Icon(Icons.settings_outlined),
-          selectedIcon: Icon(Icons.settings),
-          label: 'Settings',
+        destination(
+          Icons.search_outlined,
+          Icons.search,
+          'Search',
+        ),
+        destination(
+          Icons.settings_outlined,
+          Icons.settings,
+          'Settings',
         ),
       ],
     );

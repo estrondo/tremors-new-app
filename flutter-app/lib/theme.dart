@@ -17,7 +17,7 @@ class TremorsColorScheme {}
 
 class TremorsTextTheme {}
 
-TremorsTheme createTremorsTheme() {
+TremorsTheme createTheme() {
   const primary = Color(0xff008fff);
   final colorScheme = ColorScheme.fromSeed(
     seedColor: primary,
@@ -34,40 +34,41 @@ TremorsTheme createTremorsTheme() {
 
   final textTheme = GoogleFonts.barlowCondensedTextTheme();
 
-  final menuBarSelectedStyle =
-      textTheme.bodySmall!.copyWith(color: colorScheme.onSurface);
-
-  final navigationBarIconTheme = IconThemeData(
-    size: 25,
-    weight: 900,
-    color: colorScheme.onSurface,
-  );
-  final selectedNavigationBarIconTheme =
-      navigationBarIconTheme.copyWith(color: colorScheme.onPrimary);
-
-  final navBarTheme = NavigationBarThemeData(
-      shadowColor: Colors.amber,
-      backgroundColor: colorScheme.surface,
-      indicatorColor: colorScheme.primary,
-      height: 55,
-      iconTheme: WidgetStateProperty.resolveWith(
-        (stateSet) => stateSet.contains(WidgetState.selected)
-            ? selectedNavigationBarIconTheme
-            : navigationBarIconTheme,
-      ),
-      labelTextStyle: WidgetStateProperty.resolveWith(
-        (stateSet) => stateSet.contains(WidgetState.selected)
-            ? menuBarSelectedStyle
-            : null,
-      ));
-
   return TremorsTheme(
     themeData: ThemeData(
       colorScheme: colorScheme,
       textTheme: textTheme,
-      navigationBarTheme: navBarTheme,
+      navigationBarTheme: _navigationBarThemeData(colorScheme, textTheme),
     ),
     colorScheme: TremorsColorScheme(),
     textTheme: TremorsTextTheme(),
   );
+}
+
+NavigationBarThemeData _navigationBarThemeData(
+  ColorScheme colorScheme,
+  TextTheme textTheme,
+) {
+  final iconTheme = IconThemeData(size: 25, color: colorScheme.onSurface);
+
+  final labelTheme = textTheme.bodySmall!.copyWith(color: colorScheme.outline);
+
+  final selectedLabelTheme = labelTheme.copyWith(color: colorScheme.onSurface);
+
+  final selectedIconTheme = iconTheme.copyWith(color: colorScheme.onPrimary);
+
+  return NavigationBarThemeData(
+      backgroundColor: colorScheme.surface,
+      indicatorColor: colorScheme.primary,
+      height: 70,
+      iconTheme: WidgetStateProperty.resolveWith(
+        (stateSet) => stateSet.contains(WidgetState.selected)
+            ? selectedIconTheme
+            : iconTheme,
+      ),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (stateSet) => stateSet.contains(WidgetState.selected)
+            ? selectedLabelTheme
+            : labelTheme,
+      ));
 }

@@ -8,7 +8,7 @@ import 'package:tremors/tremors_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final tremorsTheme = createTremorsTheme();
+  final tremorsTheme = createTheme();
 
   final localKey = UniqueKey();
   final rootKey = GlobalKey<NavigatorState>();
@@ -43,7 +43,7 @@ void main() async {
     value: tremorsTheme,
     child: MultiProvider(
       providers: [ChangeNotifierProvider(create: MapManager.create)],
-      child: app,
+      child: SafeArea(child: app),
     ),
   ));
 }

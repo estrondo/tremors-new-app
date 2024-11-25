@@ -17,11 +17,11 @@ class _TremorsMap extends State<TremorsMap> {
   Widget build(BuildContext context) {
     return Selector<MapManager, (List<LayerDescriptor>, MapManager)>(
       selector: (_, mapManager) => (mapManager.layers, mapManager),
-      builder: _createFlutterMap,
+      builder: _createMap,
     );
   }
 
-  Widget _createFlutterMap(BuildContext context,
+  Widget _createMap(BuildContext context,
       (List<LayerDescriptor>, MapManager) record, Widget? child) {
     final (layers, mapManager) = record;
 
@@ -38,7 +38,7 @@ class _TremorsMap extends State<TremorsMap> {
 
     for (final descriptor in layers) {
       switch (descriptor) {
-        case var descriptor as TileLayerDescriptor:
+        case final descriptor as TileLayerDescriptor:
           result.add(_createTileLayer(descriptor));
       }
     }

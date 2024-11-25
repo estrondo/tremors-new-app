@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tremors/extensions.dart';
+import 'package:tremors/tremors_icons.dart';
 
 const destinations = ['/', '/layers', '/search', '/settings'];
 
@@ -11,14 +12,13 @@ class TremorsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: context.colorScheme.surface,
-      child: Column(
-        children: [
-          Expanded(child: Center(child: child)),
-          _createNavigationBar(context),
-        ],
-      ),
+    return Column(
+      children: [
+        Expanded(
+          child: Container(color: context.colorScheme.surface, child: child),
+        ),
+        _createNavigationBar(context),
+      ],
     );
   }
 
@@ -27,11 +27,10 @@ class TremorsPage extends StatelessWidget {
   }
 
   NavigationBar _createNavigationBar(BuildContext context) {
-    final routeState = GoRouterState.of(context);
+    final routerState = GoRouterState.of(context);
+    final index = destinations.indexOf(routerState.matchedLocation);
 
-    final index = destinations.indexOf(routeState.matchedLocation);
-
-    NavigationDestination destination(
+    Widget destination(
       IconData icon,
       IconData selectedIcon,
       String label,
@@ -47,23 +46,23 @@ class TremorsPage extends StatelessWidget {
       selectedIndex: index >= 0 ? index : 0,
       destinations: [
         destination(
-          Icons.map_outlined,
-          Icons.map,
+          TremorsIcons.world,
+          TremorsIcons.worldSelected,
           'Home',
         ),
         destination(
-          Icons.layers_outlined,
-          Icons.layers,
+          TremorsIcons.layers,
+          TremorsIcons.layersSelected,
           'Layers',
         ),
         destination(
-          Icons.search_outlined,
-          Icons.search,
+          TremorsIcons.search,
+          TremorsIcons.searchSelected,
           'Search',
         ),
         destination(
-          Icons.settings_outlined,
-          Icons.settings,
+          TremorsIcons.settings,
+          TremorsIcons.settingsSelected,
           'Settings',
         ),
       ],

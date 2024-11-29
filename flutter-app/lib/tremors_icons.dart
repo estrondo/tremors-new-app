@@ -11,4 +11,5 @@ abstract final class TremorsIcons {
   static const layersSelected = IconData(0x0041, fontFamily: _fontFamily);
   static const searchSelected = IconData(0x0042, fontFamily: _fontFamily);
   static const settingsSelected = IconData(0x0043, fontFamily: _fontFamily);
+  static const warning = IconData(0x004a, fontFamily: _fontFamily);
 }

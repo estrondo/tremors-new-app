@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:tremors/auth/auth_service.dart';
 import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/navigation.dart';
 import 'package:tremors/theme.dart';
@@ -18,6 +19,7 @@ void main() async {
       theme: tremorsTheme.themeData,
       routerConfig: GoRouter(
         navigatorKey: rootKey,
+        initialLocation: '/login',
         routes: [
           StatefulShellRoute.indexedStack(
             builder: (context, state, child) => TremorsPage(child: child),
@@ -35,14 +37,18 @@ void main() async {
                 routes: [GoRoute(path: '/settings', builder: settingsPage)],
               ),
             ],
-          )
+          ),
+          GoRoute(path: '/login', builder: loginPage),
         ],
       ));
 
   runApp(Provider.value(
     value: tremorsTheme,
     child: MultiProvider(
-      providers: [ChangeNotifierProvider(create: MapManager.create)],
+      providers: [
+        ChangeNotifierProvider(create: MapManager.create),
+        ChangeNotifierProvider(create: AuthService.create)
+      ],
       child: SafeArea(child: app),
     ),
   ));

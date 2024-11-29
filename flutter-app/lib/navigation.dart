@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Page;
 import 'package:go_router/go_router.dart';
+import 'package:tremors/login_page.dart';
 import 'package:tremors/map/tremors_map.dart';
 
 Widget mapPage(BuildContext context, GoRouterState state) {
@@ -23,4 +24,8 @@ Widget searchPage(BuildContext context, GoRouterState state) {
 
 Widget settingsPage(BuildContext context, GoRouterState state) {
   return Column(children: [const Center(child: Text('SETTINGS')), back]);
+}
+
+Widget loginPage(BuildContext context, GoRouterState state) {
+  return const LoginPage();
 }

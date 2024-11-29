@@ -64,14 +64,12 @@ class LoginPage extends StatelessWidget {
     final textTheme = context.textTheme;
     final labelStyle = _labelStyle(textTheme, colorScheme);
 
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          for (final provider in AuthProvider.values)
-            _loginButton(service, provider, context, colorScheme, labelStyle)
-        ].interpolate(const SizedBox(height: 10)),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        for (final provider in AuthProvider.values)
+          _loginButton(service, provider, context, colorScheme, labelStyle)
+      ].interpolate(const SizedBox(height: 10)),
     );
   }
 

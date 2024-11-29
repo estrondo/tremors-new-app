@@ -13,8 +13,13 @@ enum AuthProvider {
   const AuthProvider(this.id, this.title);
 }
 
+const _NotLoggedValue = 0,
+    _WaitingValue = 1,
+    _LoggedValue = 2,
+    _FailedValue = 3;
+
 sealed class AuthState {
-  /// 0 Not Logged, 1 Waiting, 3 Logged, 4 Failed.
+  /// 0 Not Logged, 1 Waiting, 2 Logged, 3 Failed.
   final int type;
   const AuthState(this.type);
 }
@@ -24,7 +29,8 @@ class Logged extends AuthState {
   final String email;
   final String name;
 
-  Logged({required this.id, required this.email, required this.name}): super(3);
+  Logged({required this.id, required this.email, required this.name})
+      : super(_LoggedValue);
 }
 
 class _P extends AuthState {
@@ -35,25 +41,25 @@ class Failed extends AuthState {
   final String message;
   final Exception exception;
 
-  Failed({required this.message, required this.exception}):super(4);
-
+  Failed({required this.message, required this.exception})
+      : super(_FailedValue);
 }
-
 
 class AuthService extends ChangeNotifier {
   AuthService();
 
-  static const notLoggedState = _P(0);
-  static const waitingState = _P(1);
-
+  static const notLoggedState = _P(_NotLoggedValue);
+  static const waitingState = _P(_WaitingValue);
 
   AuthState _state = notLoggedState;
 
-  AuthState? get state => _state;
+  AuthState get state => _state;
 
   factory AuthService.create(BuildContext context) {
     return AuthService();
   }
+
+  get isLogged => _state.type == _LoggedValue;
 
   void call(AuthProvider provider) async {
     _state = waitingState;
@@ -61,7 +67,7 @@ class AuthService extends ChangeNotifier {
 
     await Future.delayed(const Duration(seconds: 5));
 
-    _state = Failed(message: "Unable to perform the login.\nPlease try it again.", exception: Exception("Ouch!"));
+    _state = Logged(id: "aaa", email: "a@b.c", name: "Abc Def");
     notifyListeners();
   }
 

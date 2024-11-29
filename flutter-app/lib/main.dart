@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/auth/auth_service.dart';
+import 'package:tremors/logger.dart';
 import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/navigation.dart';
 import 'package:tremors/theme.dart';
@@ -19,10 +21,17 @@ void main() async {
       theme: tremorsTheme.themeData,
       routerConfig: GoRouter(
         navigatorKey: rootKey,
-        initialLocation: '/login',
         routes: [
           StatefulShellRoute.indexedStack(
             builder: (context, state, child) => TremorsPage(child: child),
+            redirect: (context, goRouterState) {
+              if (context.read<AuthService>().isLogged) {
+                return null;
+              } else {
+                logger.i("User is not logged, redirecting them to login page.");
+                return "/login";
+              }
+            },
             branches: [
               StatefulShellBranch(
                 routes: [GoRoute(path: '/', builder: mapPage)],

@@ -55,8 +55,14 @@ class LoginPage extends StatelessWidget {
       == AuthService.notLoggedState => _buildLogin(service, context),
       == AuthService.waitingState => _buildWaiting(context),
       Failed failed => _buildFailed(service, failed, context),
-      _ => throw StateError("Unexpected AuthService state!")
+      Logged logged => _logged(logged, context),
+      _ => throw Exception("Invalid state!")
     };
+  }
+
+  Widget _logged(Logged state, BuildContext context) {
+    context.delayedGo("/");
+    return Container();
   }
 
   Widget _buildLogin(AuthService service, BuildContext context) {

@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 enum AuthProvider {
   google("google", "Google"),
@@ -13,10 +16,10 @@ enum AuthProvider {
   const AuthProvider(this.id, this.title);
 }
 
-const _NotLoggedValue = 0,
-    _WaitingValue = 1,
-    _LoggedValue = 2,
-    _FailedValue = 3;
+const _notLoggedValue = 0,
+    _waitingValue = 1,
+    _loggedValue = 2,
+    _failedValue = 3;
 
 sealed class AuthState {
   /// 0 Not Logged, 1 Waiting, 2 Logged, 3 Failed.
@@ -30,7 +33,7 @@ class Logged extends AuthState {
   final String name;
 
   Logged({required this.id, required this.email, required this.name})
-      : super(_LoggedValue);
+      : super(_loggedValue);
 }
 
 class _P extends AuthState {
@@ -42,14 +45,16 @@ class Failed extends AuthState {
   final Exception exception;
 
   Failed({required this.message, required this.exception})
-      : super(_FailedValue);
+      : super(_failedValue);
 }
 
 class AuthService extends ChangeNotifier {
   AuthService();
 
-  static const notLoggedState = _P(_NotLoggedValue);
-  static const waitingState = _P(_WaitingValue);
+  static const notLoggedState = _P(_notLoggedValue);
+  static const waitingState = _P(_waitingValue);
+
+  final logger = Logger();
 
   AuthState _state = notLoggedState;
 
@@ -59,7 +64,7 @@ class AuthService extends ChangeNotifier {
     return AuthService();
   }
 
-  get isLogged => _state.type == _LoggedValue;
+  get isLogged => _state.type == _loggedValue;
 
   void call(AuthProvider provider) async {
     _state = waitingState;

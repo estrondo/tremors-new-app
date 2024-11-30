@@ -13,6 +13,7 @@ const _width = 300.0;
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
+  @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final textTheme = context.textTheme;
@@ -33,7 +34,7 @@ class LoginPage extends StatelessWidget {
             width: mediaQuery.size.width / 4,
           ),
           _padding,
-          Expanded(child: Consumer<AuthService>(builder: _buildContent)),
+          Expanded(child: Consumer<AuthService>(builder: _build)),
           _padding,
           Text(
             "Developed by Estrondo\nVersion 1.0.0",
@@ -46,21 +47,17 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(
-    BuildContext context,
-    AuthService service,
-    Widget? child,
-  ) {
+  Widget _build(BuildContext context, AuthService service, Widget? child) {
     return switch (service.state) {
       == AuthService.notLoggedState => _buildLogin(service, context),
       == AuthService.waitingState => _buildWaiting(context),
       Failed failed => _buildFailed(service, failed, context),
-      Logged logged => _logged(logged, context),
-      _ => throw Exception("Invalid state!")
+      Logged logged => _buildLogged(logged, context),
+      _ => throw Exception("Invalid state!"),
     };
   }
 
-  Widget _logged(Logged state, BuildContext context) {
+  Widget _buildLogged(Logged state, BuildContext context) {
     context.delayedGo("/");
     return Container();
   }
@@ -150,7 +147,9 @@ class LoginPage extends StatelessWidget {
   Widget _loginButton(AuthService service, AuthProvider provider,
       BuildContext context, ColorScheme colorScheme, TextStyle textStyle) {
     return _filledButton(
-      onPressed: () => service(provider),
+      onPressed: () {
+        service(provider);
+      },
       child: Row(
         children: [
           Container(
@@ -160,11 +159,13 @@ class LoginPage extends StatelessWidget {
               "images/${provider.id}-logo.svg",
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              "Login with ${provider.title}",
-              style: textStyle,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                "Login with ${provider.title}",
+                style: textStyle,
+              ),
             ),
           ),
         ],

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,7 +19,7 @@ class TremorsColorScheme {}
 
 class TremorsTextTheme {}
 
-TremorsTheme createTheme() {
+FutureOr<TremorsTheme> createTheme() async {
   const primary = Color(0xff008fff);
   final colorScheme = ColorScheme.fromSeed(
     seedColor: primary,
@@ -33,6 +35,7 @@ TremorsTheme createTheme() {
   );
 
   final textTheme = GoogleFonts.barlowCondensedTextTheme();
+  await GoogleFonts.pendingFonts();
 
   return TremorsTheme(
     themeData: ThemeData(

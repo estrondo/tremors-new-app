@@ -18,7 +18,7 @@ void main() async {
   final shellKey = GlobalKey<NavigatorState>();
 
   final app = MaterialApp.router(
-      theme: tremorsTheme.themeData,
+      theme: (await tremorsTheme).themeData,
       routerConfig: GoRouter(
         navigatorKey: rootKey,
         routes: [

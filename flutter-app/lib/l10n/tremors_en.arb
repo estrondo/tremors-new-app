@@ -6,6 +6,17 @@
   "loginPageDevelopedBy": "Developed by Estrondo\nVersion {version}",
   "loginProviderLabel": "Login with {provider}",
   "loginTryAgainLabel": "Try it again",
-  "loginAuthenticating": "Authenticating"
+  "loginAuthenticating": "Authenticating",
+
+  "panelBackTooltip": "Go back",
+
+  "searchPanelTitle": "Search",
+
+  "searchInputMagnitudeLabel": "Magnitudes",
+  "searchInputTimeLabel": "When",
+  "searchInputLocations": "Locations",
+  "searchSavedTitle": "Saved searches",
+  "searchSave": "Save",
+  "searchFilter": "Filter"
 
 }

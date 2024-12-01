@@ -42,6 +42,7 @@ FutureOr<TremorsTheme> createTheme() async {
       colorScheme: colorScheme,
       textTheme: textTheme,
       navigationBarTheme: _navigationBarThemeData(colorScheme, textTheme),
+      iconTheme: _iconThemeData()
     ),
     colorScheme: TremorsColorScheme(),
     textTheme: TremorsTextTheme(),
@@ -74,4 +75,11 @@ NavigationBarThemeData _navigationBarThemeData(
             ? selectedLabelTheme
             : labelTheme,
       ));
+}
+
+
+IconThemeData _iconThemeData() {
+  return const IconThemeData(
+    size: 16
+  );
 }

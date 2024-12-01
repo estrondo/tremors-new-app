@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -70,7 +68,7 @@ class AuthService extends ChangeNotifier {
     _state = waitingState;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
 
     _state = Logged(id: "aaa", email: "a@b.c", name: "Abc Def");
     // _state = Failed(message: "Ops!", exception: Exception("@@@"));

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/auth/auth_service.dart';
 import 'package:tremors/l10n.dart';
 import 'package:tremors/logger.dart';
+import 'package:tremors/managers/search.dart';
 import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/navigation.dart';
 import 'package:tremors/theme.dart';
@@ -59,7 +59,8 @@ void main() async {
     child: MultiProvider(
       providers: [
         ChangeNotifierProvider(create: MapManager.create),
-        ChangeNotifierProvider(create: AuthService.create)
+        ChangeNotifierProvider(create: AuthService.create),
+        ChangeNotifierProvider(create: SearchManager.create)
       ],
       child: SafeArea(child: app),
     ),

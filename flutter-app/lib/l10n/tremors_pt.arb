@@ -1,10 +1,21 @@
 {
   "mainMenuLayers": "Camadas",
   "mainMenuHome": "Início",
-  "mainMenuSearch": "Procurar",
+  "mainMenuSearch": "Pesquisar",
   "mainMenuSettings": "Configurar",
+
   "loginPageDevelopedBy": "Desenvolvido por Estrondo\nVersão {version}",
   "loginProviderLabel": "Logar com {provider}",
   "loginTryAgainLabel": "Tentar novamente",
-  "loginAuthenticating": "Autenticando"
+  "loginAuthenticating": "Autenticando",
+
+  "panelBackTooltip": "Voltar",
+
+  "searchPanelTitle": "Pesquisar",
+  "searchInputMagnitudeLabel": "Magnitudes",
+  "searchInputTimeLabel": "Quando",
+  "searchInputLocations": "Localizações",
+  "searchSavedTitle": "Pesquisas salvas",
+  "searchSave": "Salvar",
+  "searchFilter": "Filtrar"
 }

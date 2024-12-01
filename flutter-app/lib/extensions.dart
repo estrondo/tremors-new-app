@@ -14,6 +14,8 @@ extension BuildContextPlus on BuildContext {
   }
 
   AppLocalizations get l10n => AppLocalizations.of(this)!;
+
+  MediaQueryData get mediaQuery => MediaQuery.of(this);
 }
 
 extension TextStylePlus on TextStyle? {

@@ -56,7 +56,7 @@ void main() {
   );
 
   testWidgets(
-    "When the user is logged the LoginPage should redirect them to the main page.",
+    "When the user is logged the LoginPage should redirect them to the main pages.",
     (tester) async {
       final service = MockAuthService();
       final goRouter = MockGoRouter();

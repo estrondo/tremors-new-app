@@ -1,0 +1,11 @@
+{
+  "mainMenuLayers": "Layers",
+  "mainMenuHome": "Home",
+  "mainMenuSearch": "Search",
+  "mainMenuSettings": "Settings",
+  "loginPageDevelopedBy": "Developed by Estrondo\nVersion {version}",
+  "loginProviderLabel": "Login with {provider}",
+  "loginTryAgainLabel": "Try it again",
+  "loginAuthenticating": "Authenticating"
+
+}

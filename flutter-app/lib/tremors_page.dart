@@ -29,6 +29,7 @@ class TremorsPage extends StatelessWidget {
   NavigationBar _createNavigationBar(BuildContext context) {
     final routerState = GoRouterState.of(context);
     final index = destinations.indexOf(routerState.matchedLocation);
+    final l10n = context.l10n;
 
     Widget destination(
       IconData icon,
@@ -48,22 +49,22 @@ class TremorsPage extends StatelessWidget {
         destination(
           TremorsIcons.world,
           TremorsIcons.worldSelected,
-          'Home',
+          l10n.mainMenuHome,
         ),
         destination(
           TremorsIcons.layers,
           TremorsIcons.layersSelected,
-          'Layers',
+          l10n.mainMenuLayers,
         ),
         destination(
           TremorsIcons.search,
           TremorsIcons.searchSelected,
-          'Search',
+          l10n.mainMenuSearch,
         ),
         destination(
           TremorsIcons.settings,
           TremorsIcons.settingsSelected,
-          'Settings',
+          l10n.mainMenuSettings,
         ),
       ],
     );

@@ -1,0 +1,10 @@
+{
+  "mainMenuLayers": "Camadas",
+  "mainMenuHome": "Início",
+  "mainMenuSearch": "Procurar",
+  "mainMenuSettings": "Configurar",
+  "loginPageDevelopedBy": "Desenvolvido por Estrondo\nVersão {version}",
+  "loginProviderLabel": "Logar com {provider}",
+  "loginTryAgainLabel": "Tentar novamente",
+  "loginAuthenticating": "Autenticando"
+}

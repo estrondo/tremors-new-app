@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -18,6 +20,7 @@ class LoginPage extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final textTheme = context.textTheme;
     final colorScheme = context.colorScheme;
+    final l10n = context.l10n;
 
     final bottomTextStyle =
         textTheme.bodyMedium!.copyWith(color: colorScheme.outline);
@@ -37,7 +40,7 @@ class LoginPage extends StatelessWidget {
           Expanded(child: Consumer<AuthService>(builder: _build)),
           _padding,
           Text(
-            "Developed by Estrondo\nVersion 1.0.0",
+            l10n.loginPageDevelopedBy("1.0.0"),
             style: bottomTextStyle,
             textAlign: TextAlign.center,
           ),
@@ -81,6 +84,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _buildWaiting(BuildContext context) {
     final colorScheme = context.colorScheme;
+    final l10n = context.l10n;
     final textStyle =
         context.textTheme.bodyMedium!.copyWith(color: colorScheme.onSurface);
     return Column(
@@ -94,7 +98,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
         Text(
-          "Authenticating...",
+          l10n.loginAuthenticating,
           style: textStyle,
         )
       ],
@@ -108,6 +112,7 @@ class LoginPage extends StatelessWidget {
     final style = textTheme.titleLarge!.copyWith(
       color: colorScheme.onSurface,
     );
+    final l10n = context.l10n;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -136,7 +141,7 @@ class LoginPage extends StatelessWidget {
         _filledButton(
           onPressed: () => service.reset(),
           child: Text(
-            "Let's try again!",
+            l10n.loginTryAgainLabel,
             style: _labelStyle(textTheme, colorScheme),
           ),
         )
@@ -146,6 +151,7 @@ class LoginPage extends StatelessWidget {
 
   Widget _loginButton(AuthService service, AuthProvider provider,
       BuildContext context, ColorScheme colorScheme, TextStyle textStyle) {
+    final l10n = context.l10n;
     return _filledButton(
       onPressed: () {
         service(provider);
@@ -163,7 +169,7 @@ class LoginPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                "Login with ${provider.title}",
+                l10n.loginProviderLabel(provider.title),
                 style: textStyle,
               ),
             ),

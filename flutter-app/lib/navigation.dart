@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Page;
 import 'package:go_router/go_router.dart';
+import 'package:tremors/extensions.dart';
 import 'package:tremors/login_page.dart';
 import 'package:tremors/map/tremors_map.dart';
 
@@ -15,15 +16,15 @@ final back = Builder(
 );
 
 Widget layersPage(BuildContext context, GoRouterState state) {
-  return Column(children: [const Center(child: Text('LAYERS')), back]);
+  return Column(children: [Center(child: Text(context.l10n.mainMenuLayers.toUpperCase())), back]);
 }
 
 Widget searchPage(BuildContext context, GoRouterState state) {
-  return Column(children: [const Center(child: Text('SEARCH')), back]);
+  return Column(children: [Center(child: Text(context.l10n.mainMenuSearch.toUpperCase())), back]);
 }
 
 Widget settingsPage(BuildContext context, GoRouterState state) {
-  return Column(children: [const Center(child: Text('SETTINGS')), back]);
+  return Column(children: [Center(child: Text(context.l10n.mainMenuSettings.toUpperCase())), back]);
 }
 
 Widget loginPage(BuildContext context, GoRouterState state) {

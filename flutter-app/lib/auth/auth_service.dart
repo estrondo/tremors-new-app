@@ -73,6 +73,7 @@ class AuthService extends ChangeNotifier {
     await Future.delayed(const Duration(seconds: 5));
 
     _state = Logged(id: "aaa", email: "a@b.c", name: "Abc Def");
+    // _state = Failed(message: "Ops!", exception: Exception("@@@"));
     notifyListeners();
   }
 

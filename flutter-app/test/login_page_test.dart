@@ -7,6 +7,7 @@ import 'package:tremors/auth/auth_service.dart';
 import 'package:tremors/login_page.dart';
 
 import 'async.dart';
+import 'en.dart';
 import 'extensions.dart';
 import 'login_page_test.mocks.dart';
 
@@ -26,7 +27,10 @@ void main() {
       ));
 
       for (final provider in AuthProvider.values) {
-        expect(find.text("Login with ${provider.title}"), findsOne);
+        expect(
+          find.text(testL10n.loginProviderLabel(provider.title)),
+          findsOne,
+        );
       }
     },
   );

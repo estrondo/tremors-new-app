@@ -12,10 +12,15 @@
   "panelBackTooltip": "Voltar",
 
   "searchPanelTitle": "Pesquisar",
+  "layersPanelTitle": "Camadas",
+
   "searchInputMagnitudeLabel": "Magnitudes",
   "searchInputTimeLabel": "Quando",
   "searchInputLocations": "Localizações",
   "searchSavedTitle": "Pesquisas salvas",
   "searchSave": "Salvar",
-  "searchFilter": "Filtrar"
+  "searchFilter": "Filtrar",
+
+  "layersMapSectionTitle" :  "Selecione um mapa",
+  "layersInformationSectionTitle": "Selecione algumas informações"
 }

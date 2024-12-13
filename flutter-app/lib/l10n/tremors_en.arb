@@ -11,12 +11,15 @@
   "panelBackTooltip": "Go back",
 
   "searchPanelTitle": "Search",
+  "layersPanelTitle": "Layers",
 
   "searchInputMagnitudeLabel": "Magnitudes",
   "searchInputTimeLabel": "When",
   "searchInputLocations": "Locations",
   "searchSavedTitle": "Saved searches",
   "searchSave": "Save",
-  "searchFilter": "Filter"
+  "searchFilter": "Filter",
 
+  "layersMapSectionTitle": "Choose a map",
+  "layersInformationSectionTitle": "Select some information"
 }

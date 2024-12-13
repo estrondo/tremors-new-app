@@ -140,25 +140,28 @@ Widget _panelTitle(String title, BuildContext context) {
         bottom: BorderSide(color: colorScheme.outline, width: 1),
       ),
     ),
-    child: SizedBox(
-      height: 40,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          IconButton(
-            onPressed: () => context.go("/"),
-            icon: Icon(
-              TremorsIcons.backArrow,
-              size: 20,
-              color: colorScheme.onSurface,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 5),
+      child: SizedBox(
+        height: 40,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () => context.go("/"),
+              icon: Icon(
+                TremorsIcons.backArrow,
+                size: 20,
+                color: colorScheme.onSurface,
+              ),
+              tooltip: l10n.panelBackTooltip,
             ),
-            tooltip: l10n.panelBackTooltip,
-          ),
-          Text(
-            title,
-            style: textTheme.headlineLarge,
-          )
-        ],
+            Text(
+              title,
+              style: textTheme.headlineLarge,
+            )
+          ],
+        ),
       ),
     ),
   );

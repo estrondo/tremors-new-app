@@ -18,6 +18,7 @@ class TremorsSection extends StatelessWidget {
           title,
           style: textTheme.headlineSmall,
         ),
+        const SizedBox(height: 5,),
         Expanded(
           child: child,
         ),

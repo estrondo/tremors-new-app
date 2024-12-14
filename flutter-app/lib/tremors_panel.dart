@@ -37,6 +37,7 @@ class TremorsDualPanel extends StatelessWidget {
   final String title;
   final Widget top;
   final Widget? bottom;
+  final double? bottomHeight;
   final Widget Function(ScrollController, double)? bottomBuilder;
 
   static const _borderRadius = BorderRadius.only(
@@ -50,6 +51,7 @@ class TremorsDualPanel extends StatelessWidget {
     required this.top,
     this.bottom,
     this.bottomBuilder,
+    this.bottomHeight,
   });
 
   @override
@@ -74,7 +76,7 @@ class TremorsDualPanel extends StatelessWidget {
 
   Widget _buildSlidingBox(BuildContext context, BoxConstraints constraints) {
     final colorScheme = context.colorScheme;
-    final maxHeight = constraints.maxHeight * 0.7;
+    final maxHeight = bottomHeight ?? constraints.maxHeight * 0.7;
 
     Widget Function(ScrollController, double)? bodyBuilder;
     Widget? body;

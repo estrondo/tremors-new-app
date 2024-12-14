@@ -10,7 +10,7 @@ class Input extends StatelessWidget {
   final double? width;
   final Widget sample;
 
-  Input({
+  const Input({
     super.key,
     required this.onPressed,
     required this.label,

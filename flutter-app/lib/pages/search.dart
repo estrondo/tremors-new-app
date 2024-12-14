@@ -5,6 +5,7 @@ import 'package:tremors/components/input.dart';
 import 'package:tremors/components/section.dart';
 import 'package:tremors/components/square_button.dart';
 import 'package:tremors/extensions.dart';
+import 'package:tremors/functions.dart';
 import 'package:tremors/managers/search.dart';
 import 'package:tremors/tremors_icons.dart';
 import 'package:tremors/tremors_panel.dart';
@@ -49,26 +50,26 @@ class TremorsSearch extends StatelessWidget {
 
     return Column(
       children: [
-        Input(
-          width: mediaQuery.size.width,
-          onPressed: _onPressed(context, _magnitude),
-          label: l10n.searchInputMagnitudeLabel,
-          sample: sample,
-        ),
-        _spacer,
-        Input(
-          width: mediaQuery.size.width,
-          onPressed: _onPressed(context, _time),
-          label: l10n.searchInputTimeLabel,
-          sample: sample,
-        ),
-        _spacer,
-        Input(
-          width: mediaQuery.size.width,
-          onPressed: _onPressed(context, _locations),
-          label: l10n.searchInputLocations,
-          sample: sample,
-        ),
+        ...horizontallySpaced([
+          Input(
+            width: mediaQuery.size.width,
+            onPressed: _onPressed(context, _magnitude),
+            label: l10n.searchInputMagnitudeLabel,
+            sample: sample,
+          ),
+          Input(
+            width: mediaQuery.size.width,
+            onPressed: _onPressed(context, _time),
+            label: l10n.searchInputTimeLabel,
+            sample: sample,
+          ),
+          Input(
+            width: mediaQuery.size.width,
+            onPressed: _onPressed(context, _locations),
+            label: l10n.searchInputLocations,
+            sample: sample,
+          )
+        ]),
         const Spacer(),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -100,9 +101,6 @@ class TremorsSearch extends StatelessWidget {
     return () => ();
   }
 }
-
-const _actionWidth = 50.0;
-const _actionIconSize = 25.0;
 
 class TremorsSavedSearches extends StatelessWidget {
   const TremorsSavedSearches({super.key});

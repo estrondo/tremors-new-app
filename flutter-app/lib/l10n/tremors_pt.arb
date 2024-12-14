@@ -13,6 +13,7 @@
 
   "searchPanelTitle": "Pesquisar",
   "layersPanelTitle": "Camadas",
+  "settingsPanelTitle": "Configurações",
 
   "searchInputMagnitudeLabel": "Magnitudes",
   "searchInputTimeLabel": "Quando",
@@ -22,5 +23,10 @@
   "searchFilter": "Filtrar",
 
   "layersMapSectionTitle" :  "Selecione um mapa",
-  "layersInformationSectionTitle": "Selecione algumas informações"
+  "layersInformationSectionTitle": "Selecione algumas informações",
+  "settingsInputNameLabel":  "Nome",
+  "settingsInputEmailLabel":  "E-mail",
+  "settingsDangerLabel":  "Perigo",
+  "settingsLogoutLabel":  "Deslogar",
+  "settingsDeleteAccountLabel": "Remover conta"
 }

@@ -5,13 +5,23 @@ typedef _ColorFunction = Color Function(ColorScheme);
 
 final _ColorFunction _usePrimaryColor = (colorScheme) => colorScheme.primary;
 
-final _ColorFunction _useOnPrimaryColor = (colorScheme) => colorScheme.onPrimary;
+final _ColorFunction _useOnPrimaryColor =
+    (colorScheme) => colorScheme.onPrimary;
 
 class SquaredButton extends StatelessWidget {
   final Widget child;
   final void Function() onPressed;
 
   late final _ColorFunction _backgroundColor;
+
+  SquaredButton({
+    super.key,
+    required this.onPressed,
+    required this.child,
+    required Color backgroundColor,
+  }) {
+    _backgroundColor = (_) => backgroundColor;
+  }
 
   SquaredButton.primary({
     super.key,
@@ -25,7 +35,7 @@ class SquaredButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.child,
-}) {
+  }) {
     _backgroundColor = _useOnPrimaryColor;
   }
 

@@ -16,4 +16,6 @@ abstract final class TremorsIcons {
   static const forwardArrow = IconData(0x003e, fontFamily: _fontFamily);
   static const edit = IconData(0x071, fontFamily: _fontFamily);
   static const delete = IconData(0x72, fontFamily: _fontFamily);
+  static const time = IconData(0x64, fontFamily: _fontFamily);
+  static const histogram = IconData(0x65, fontFamily: _fontFamily);
 }

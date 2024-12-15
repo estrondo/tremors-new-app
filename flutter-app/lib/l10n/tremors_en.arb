@@ -29,5 +29,7 @@
   "settingsInputEmailLabel": "E-mail",
   "settingsDangerLabel": "Danger",
   "settingsLogoutLabel": "Logout",
-  "settingsDeleteAccountLabel": "Delete account"
+  "settingsDeleteAccountLabel": "Delete account",
+
+  "mapPlusInfoLabel": "+ Info"
 }

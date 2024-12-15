@@ -29,12 +29,12 @@ class SettingsPage extends StatelessWidget {
           Input(
             onPressed: () {},
             label: l10n.settingsInputNameLabel,
-            sample: Text("sample"),
+            sample: const Text("sample"),
           ),
           Input(
             onPressed: () {},
             label: l10n.settingsInputEmailLabel,
-            sample: Text("email"),
+            sample: const Text("email"),
           ),
         ])
       ],

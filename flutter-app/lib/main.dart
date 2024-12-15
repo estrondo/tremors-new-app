@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tremors/auth/auth_service.dart';
 import 'package:tremors/l10n.dart';
 import 'package:tremors/logger.dart';
+import 'package:tremors/managers/Moment.dart';
 import 'package:tremors/managers/search.dart';
 import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/navigation.dart';
@@ -22,6 +23,7 @@ void main() async {
       theme: (await tremorsTheme).themeData,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      debugShowCheckedModeBanner: false,
       routerConfig: GoRouter(
         navigatorKey: rootKey,
         routes: [
@@ -60,7 +62,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: MapManager.create),
         ChangeNotifierProvider(create: AuthService.create),
-        ChangeNotifierProvider(create: SearchManager.create)
+        ChangeNotifierProvider(create: SearchManager.create),
+        ChangeNotifierProvider(create: Moment.create),
       ],
       child: SafeArea(child: app),
     ),

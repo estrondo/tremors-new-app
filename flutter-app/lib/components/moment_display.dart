@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/extensions.dart';
-import 'package:tremors/managers/Moment.dart';
+import 'package:tremors/managers/moment.dart';
 
-String _twoDigits(int value, [bool sign = false]) => switch (value) {
-      > 9 => "${sign ? '+' : ''}$value",
+String _twoDigits(int value) => switch (value) {
+      > 9 => "$value",
       < -9 => "$value",
-      > 0 => "${sign ? '+' : ''}0$value",
       < 0 => "-0${0 - value}",
-      _ => "${sign ? '+' : ''}00"
+      _ => "0$value",
     };
 
 String _fourDigits(int value) => switch (value) {
@@ -17,6 +16,9 @@ String _fourDigits(int value) => switch (value) {
       > 9 => "000$value",
       _ => "E$value",
     };
+
+String _signedTwoDigits(int value) =>
+    value >= 0 ? "+${_twoDigits(value)}" : _twoDigits(value);
 
 class MomentDisplay extends StatelessWidget {
   const MomentDisplay({super.key});
@@ -30,7 +32,7 @@ class MomentDisplay extends StatelessWidget {
     final textTheme = context.textTheme;
     final c = moment.current;
     return Text(
-      "${_fourDigits(c.year)}-${_twoDigits(c.month)}-${_twoDigits(c.day)} ${_twoDigits(c.hour)}-${_twoDigits(c.minute)} UTC ${_twoDigits(c.timeZoneOffset.inHours, true)}",
+      "${_fourDigits(c.year)}-${_twoDigits(c.month)}-${_twoDigits(c.day)} ${_twoDigits(c.hour)}:${_twoDigits(c.minute)} UTC${_signedTwoDigits(c.timeZoneOffset.inHours)}",
       style: textTheme.bodyMedium,
     );
   }

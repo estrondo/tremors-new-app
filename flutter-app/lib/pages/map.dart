@@ -89,7 +89,7 @@ class _MapPage extends State<MapPage> {
   List<Widget> _convert(List<LayerDescriptor> layers) {
     List<Widget> result = [];
     for (final descriptor in layers) {
-      switch(descriptor) {
+      switch (descriptor) {
         case TileLayerDescriptor descriptor:
           result.add(_createTileLayer(descriptor));
       }

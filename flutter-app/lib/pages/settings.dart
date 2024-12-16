@@ -70,9 +70,12 @@ class SettingsPage extends StatelessWidget {
               child: SquaredButton(
                 onPressed: () {},
                 backgroundColor: colorScheme.error,
-                child: Text(l10n.settingsDeleteAccountLabel, style: textTheme.labelLarge!.copyWith(
-                  color: colorScheme.onError,
-                ),),
+                child: Text(
+                  l10n.settingsDeleteAccountLabel,
+                  style: textTheme.labelLarge!.copyWith(
+                    color: colorScheme.onError,
+                  ),
+                ),
               ),
             )
           ],

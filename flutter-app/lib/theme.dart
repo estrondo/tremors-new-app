@@ -39,11 +39,10 @@ FutureOr<TremorsTheme> createTheme() async {
 
   return TremorsTheme(
     themeData: ThemeData(
-      colorScheme: colorScheme,
-      textTheme: textTheme,
-      navigationBarTheme: _navigationBarThemeData(colorScheme, textTheme),
-      iconTheme: _iconThemeData()
-    ),
+        colorScheme: colorScheme,
+        textTheme: textTheme,
+        navigationBarTheme: _navigationBarThemeData(colorScheme, textTheme),
+        iconTheme: _iconThemeData()),
     colorScheme: TremorsColorScheme(),
     textTheme: TremorsTextTheme(),
   );
@@ -77,9 +76,6 @@ NavigationBarThemeData _navigationBarThemeData(
       ));
 }
 
-
 IconThemeData _iconThemeData() {
-  return const IconThemeData(
-    size: 16
-  );
+  return const IconThemeData(size: 16);
 }

@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 enum MomentStrategy {
-  System,
-  Fixed,
-  Incremental;
+  system,
+  fixed,
+  incremental;
 }
 
 class Moment extends ChangeNotifier {
   final _stopwatch = Stopwatch();
-  MomentStrategy _strategy = MomentStrategy.System;
+  MomentStrategy _strategy = MomentStrategy.system;
   late DateTime _current;
 
   DateTime get current => _current;
@@ -31,9 +31,9 @@ class Moment extends ChangeNotifier {
 
   void _update(Timer timer) {
     _current = switch (_strategy) {
-      MomentStrategy.System => DateTime.now(),
-      MomentStrategy.Incremental => _current.add(_stopwatch.elapsed),
-      MomentStrategy.Fixed => _current,
+      MomentStrategy.system => DateTime.now(),
+      MomentStrategy.incremental => _current.add(_stopwatch.elapsed),
+      MomentStrategy.fixed => _current,
     };
 
     notifyListeners();

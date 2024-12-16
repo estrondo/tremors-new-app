@@ -1,4 +1,3 @@
-
 sealed class TremorsException {
   final String message;
 
@@ -6,6 +5,5 @@ sealed class TremorsException {
 }
 
 class SecurityException extends TremorsException {
-
   SecurityException(super.message);
 }

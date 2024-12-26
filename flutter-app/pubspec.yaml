@@ -47,6 +47,8 @@ dependencies:
   intl: any
   flutter_sliding_box: ^1.1.5
   flutter_slidable: ^3.1.1
+  google_sign_in: ^6.2.2
+  firebase_core: ^3.9.0
 
 dev_dependencies:
   flutter_test:

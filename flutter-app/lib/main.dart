@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/auth/auth_service.dart';
+import 'package:tremors/firebase_options.dart';
 import 'package:tremors/l10n.dart';
 import 'package:tremors/logger.dart';
 import 'package:tremors/managers/moment.dart';
@@ -13,6 +15,10 @@ import 'package:tremors/tremors_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   final tremorsTheme = createTheme();
 
   final localKey = UniqueKey();

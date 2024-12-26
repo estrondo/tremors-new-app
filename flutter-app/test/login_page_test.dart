@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/auth/auth_service.dart';
+import 'package:tremors/auth/models.dart';
 import 'package:tremors/login_page.dart';
 
 import 'async.dart';

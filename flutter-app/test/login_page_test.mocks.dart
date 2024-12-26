@@ -3,20 +3,21 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i13;
-import 'dart:ui' as _i10;
+import 'dart:async' as _i14;
+import 'dart:ui' as _i11;
 
 import 'package:flutter/material.dart' as _i4;
 import 'package:go_router/src/configuration.dart' as _i3;
 import 'package:go_router/src/delegate.dart' as _i5;
 import 'package:go_router/src/information_provider.dart' as _i6;
-import 'package:go_router/src/match.dart' as _i12;
+import 'package:go_router/src/match.dart' as _i13;
 import 'package:go_router/src/parser.dart' as _i7;
-import 'package:go_router/src/router.dart' as _i11;
+import 'package:go_router/src/router.dart' as _i12;
 import 'package:logger/logger.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i9;
 import 'package:tremors/auth/auth_service.dart' as _i8;
+import 'package:tremors/auth/models.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -105,7 +106,7 @@ class MockAuthService extends _i1.Mock implements _i8.AuthService {
   }
 
   @override
-  _i2.Logger get logger => (super.noSuchMethod(
+  _i2.Logger get _logger => (super.noSuchMethod(
         Invocation.getter(#logger),
         returnValue: _FakeLogger_0(
           this,
@@ -129,7 +130,7 @@ class MockAuthService extends _i1.Mock implements _i8.AuthService {
       ) as bool);
 
   @override
-  void call(_i8.AuthProvider? provider) => super.noSuchMethod(
+  void call(_i10.AuthProvider? provider) => super.noSuchMethod(
         Invocation.method(
           #call,
           [provider],
@@ -147,7 +148,7 @@ class MockAuthService extends _i1.Mock implements _i8.AuthService {
       );
 
   @override
-  void addListener(_i10.VoidCallback? listener) => super.noSuchMethod(
+  void addListener(_i11.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,
           [listener],
@@ -156,7 +157,7 @@ class MockAuthService extends _i1.Mock implements _i8.AuthService {
       );
 
   @override
-  void removeListener(_i10.VoidCallback? listener) => super.noSuchMethod(
+  void removeListener(_i11.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #removeListener,
           [listener],
@@ -186,7 +187,7 @@ class MockAuthService extends _i1.Mock implements _i8.AuthService {
 /// A class which mocks [GoRouter].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
+class MockGoRouter extends _i1.Mock implements _i12.GoRouter {
   MockGoRouter() {
     _i1.throwOnMissingStub(this);
   }
@@ -338,7 +339,7 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
       );
 
   @override
-  void restore(_i12.RouteMatchList? matchList) => super.noSuchMethod(
+  void restore(_i13.RouteMatchList? matchList) => super.noSuchMethod(
         Invocation.method(
           #restore,
           [matchList],
@@ -367,7 +368,7 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
       );
 
   @override
-  _i13.Future<T?> push<T extends Object?>(
+  _i14.Future<T?> push<T extends Object?>(
     String? location, {
     Object? extra,
   }) =>
@@ -377,11 +378,11 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
           [location],
           {#extra: extra},
         ),
-        returnValue: _i13.Future<T?>.value(),
-      ) as _i13.Future<T?>);
+        returnValue: _i14.Future<T?>.value(),
+      ) as _i14.Future<T?>);
 
   @override
-  _i13.Future<T?> pushNamed<T extends Object?>(
+  _i14.Future<T?> pushNamed<T extends Object?>(
     String? name, {
     Map<String, String>? pathParameters = const {},
     Map<String, dynamic>? queryParameters = const {},
@@ -397,11 +398,11 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
             #extra: extra,
           },
         ),
-        returnValue: _i13.Future<T?>.value(),
-      ) as _i13.Future<T?>);
+        returnValue: _i14.Future<T?>.value(),
+      ) as _i14.Future<T?>);
 
   @override
-  _i13.Future<T?> pushReplacement<T extends Object?>(
+  _i14.Future<T?> pushReplacement<T extends Object?>(
     String? location, {
     Object? extra,
   }) =>
@@ -411,11 +412,11 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
           [location],
           {#extra: extra},
         ),
-        returnValue: _i13.Future<T?>.value(),
-      ) as _i13.Future<T?>);
+        returnValue: _i14.Future<T?>.value(),
+      ) as _i14.Future<T?>);
 
   @override
-  _i13.Future<T?> pushReplacementNamed<T extends Object?>(
+  _i14.Future<T?> pushReplacementNamed<T extends Object?>(
     String? name, {
     Map<String, String>? pathParameters = const {},
     Map<String, dynamic>? queryParameters = const {},
@@ -431,11 +432,11 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
             #extra: extra,
           },
         ),
-        returnValue: _i13.Future<T?>.value(),
-      ) as _i13.Future<T?>);
+        returnValue: _i14.Future<T?>.value(),
+      ) as _i14.Future<T?>);
 
   @override
-  _i13.Future<T?> replace<T>(
+  _i14.Future<T?> replace<T>(
     String? location, {
     Object? extra,
   }) =>
@@ -445,11 +446,11 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
           [location],
           {#extra: extra},
         ),
-        returnValue: _i13.Future<T?>.value(),
-      ) as _i13.Future<T?>);
+        returnValue: _i14.Future<T?>.value(),
+      ) as _i14.Future<T?>);
 
   @override
-  _i13.Future<T?> replaceNamed<T>(
+  _i14.Future<T?> replaceNamed<T>(
     String? name, {
     Map<String, String>? pathParameters = const {},
     Map<String, dynamic>? queryParameters = const {},
@@ -465,8 +466,8 @@ class MockGoRouter extends _i1.Mock implements _i11.GoRouter {
             #extra: extra,
           },
         ),
-        returnValue: _i13.Future<T?>.value(),
-      ) as _i13.Future<T?>);
+        returnValue: _i14.Future<T?>.value(),
+      ) as _i14.Future<T?>);
 
   @override
   void pop<T extends Object?>([T? result]) => super.noSuchMethod(

@@ -1,18 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
-
-enum AuthProvider {
-  google("google", "Google"),
-  wechat("wechat", "Wechat"),
-  microsoft("microsoft", "Microsoft"),
-  apple("apple", "Apple"),
-  vk("vk", "VK");
-
-  final String id;
-  final String title;
-
-  const AuthProvider(this.id, this.title);
-}
+import 'package:tremors/auth/google.dart';
+import 'package:tremors/auth/models.dart';
+import 'package:tremors/errors.dart';
+import 'package:tremors/logger.dart';
 
 const _notLoggedValue = 0,
     _waitingValue = 1,
@@ -52,7 +42,7 @@ class AuthService extends ChangeNotifier {
   static const notLoggedState = _P(_notLoggedValue);
   static const waitingState = _P(_waitingValue);
 
-  final logger = Logger();
+  final _logger = namedLogger("AuthService");
 
   AuthState _state = notLoggedState;
 
@@ -68,10 +58,34 @@ class AuthService extends ChangeNotifier {
     _state = waitingState;
     notifyListeners();
 
-    await Future.delayed(const Duration(seconds: 2));
+    final notImplemented = Future.error(SecurityException("Not implemented!"));
 
-    _state = Logged(id: "aaa", email: "a@b.c", name: "Abc Def");
-    // _state = Failed(message: "Ops!", exception: Exception("@@@"));
+    final idTokenFuture = switch (provider) {
+      AuthProvider.google => loginWithGoogle(provider),
+      AuthProvider.wechat => notImplemented,
+      AuthProvider.microsoft => notImplemented,
+      AuthProvider.apple => notImplemented,
+      AuthProvider.vk => notImplemented,
+    };
+
+    _logger.d("Using ${provider.title}.");
+    late final String idToken;
+    try {
+      idToken = await idTokenFuture;
+      _state = Logged(
+        id: idToken,
+        email: idToken,
+        name: idToken,
+      );
+      _logger.t("IdToken: $idToken");
+    } on SecurityException catch (cause) {
+      _logger.e("Sign process has failed:", error: cause.source ?? cause);
+      _state = Failed(
+        message: "Login with ${provider.title} has failed.",
+        exception: cause,
+      );
+    }
+
     notifyListeners();
   }
 

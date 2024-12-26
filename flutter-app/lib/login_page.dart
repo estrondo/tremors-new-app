@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/auth/auth_service.dart';
+import 'package:tremors/auth/models.dart';
 import 'package:tremors/extensions.dart';
 import 'package:tremors/tremors_icons.dart';
 
@@ -128,9 +129,12 @@ class LoginPage extends StatelessWidget {
                   color: colorScheme.error,
                 ),
               ),
-              Text(
-                failed.message,
-                style: style,
+              Flexible(
+                child: Text(
+                  failed.message,
+                  style: style,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

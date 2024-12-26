@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "733899787017",
+    "project_id": "estrondo-381713",
+    "storage_bucket": "estrondo-381713.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733899787017:android:80b04e7ffefe38782561d8",
+        "android_client_info": {
+          "package_name": "one.estrondo.tremors"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733899787017-8rr9etv8bremcnni9olpcv9squq3hsfl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "one.estrondo.tremors",
+            "certificate_hash": "f2ef88e39d77acfbcf25f89ede5713665316dafa"
+          }
+        },
+        {
+          "client_id": "733899787017-l0d113brrucghkd2sauec4j8ct5alv5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhWN1YdqfYwnND5w0FD7iMFcjdqCuyiu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733899787017-l0d113brrucghkd2sauec4j8ct5alv5i.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "733899787017-cvm5o2e0rokfo0ouu5bfvdrba8mokpqb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "one.estrondo.tremors"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

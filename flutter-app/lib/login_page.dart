@@ -131,7 +131,7 @@ class LoginPage extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  failed.message,
+                  l10n.loginPageFailed(failed.provider.title),
                   style: style,
                   textAlign: TextAlign.center,
                 ),

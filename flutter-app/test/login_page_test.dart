@@ -44,7 +44,11 @@ void main() {
       const expectedErrorMessage = "My friend!";
 
       when(authService.state).thenReturn(
-        Failed(message: expectedErrorMessage, exception: Exception("@@@")),
+        Failed(
+          message: expectedErrorMessage,
+          exception: Exception("@@@"),
+          provider: AuthProvider.google,
+        ),
       );
 
       await tester.pumpWidgetWithApp(ChangeNotifierProvider<AuthService>.value(
@@ -63,7 +67,12 @@ void main() {
       final goRouter = MockGoRouter();
 
       when(service.state).thenReturn(
-        Logged(id: "id", email: "a@b.c", name: "d"),
+        Logged(
+          id: "id",
+          email: "a@b.c",
+          name: "d",
+          provider: AuthProvider.vk,
+        ),
       );
 
       runAsync(

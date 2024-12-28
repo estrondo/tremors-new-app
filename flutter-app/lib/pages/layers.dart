@@ -22,13 +22,14 @@ class LayersPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
+            flex: 2,
             child: TremorsSection(
               title: l10n.layersMapSectionTitle,
               child: Consumer<MapManager>(builder: _buildMapTypeList),
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: TremorsSection(
               title: l10n.layersInformationSectionTitle,
               child: Consumer<MapManager>(

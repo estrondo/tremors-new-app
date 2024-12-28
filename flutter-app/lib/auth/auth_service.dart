@@ -19,9 +19,14 @@ class Logged extends AuthState {
   final String id;
   final String email;
   final String name;
+  final AuthProvider provider;
 
-  Logged({required this.id, required this.email, required this.name})
-      : super(_loggedValue);
+  Logged({
+    required this.id,
+    required this.email,
+    required this.name,
+    required this.provider,
+  }) : super(_loggedValue);
 }
 
 class _P extends AuthState {
@@ -31,9 +36,13 @@ class _P extends AuthState {
 class Failed extends AuthState {
   final String message;
   final Exception exception;
+  final AuthProvider provider;
 
-  Failed({required this.message, required this.exception})
-      : super(_failedValue);
+  Failed({
+    required this.message,
+    required this.exception,
+    required this.provider,
+  }) : super(_failedValue);
 }
 
 class AuthService extends ChangeNotifier {
@@ -76,6 +85,7 @@ class AuthService extends ChangeNotifier {
         id: idToken,
         email: idToken,
         name: idToken,
+        provider: provider,
       );
       _logger.t("IdToken: $idToken");
     } on SecurityException catch (cause) {
@@ -83,6 +93,7 @@ class AuthService extends ChangeNotifier {
       _state = Failed(
         message: "Login with ${provider.title} has failed.",
         exception: cause,
+        provider: provider,
       );
     }
 

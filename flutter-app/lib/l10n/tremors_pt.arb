@@ -8,6 +8,7 @@
   "loginProviderLabel": "Logar com {provider}",
   "loginTryAgainLabel": "Tentar novamente",
   "loginAuthenticating": "Autenticando",
+  "loginPageFailed": "Login com {provider} falhou!",
 
   "panelBackTooltip": "Voltar",
 
@@ -28,5 +29,7 @@
   "settingsInputEmailLabel":  "E-mail",
   "settingsDangerLabel":  "Perigo",
   "settingsLogoutLabel":  "Deslogar",
-  "settingsDeleteAccountLabel": "Remover conta"
+  "settingsDeleteAccountLabel": "Remover conta",
+
+  "mapPlusInfoLabel": "+ Info"
 }

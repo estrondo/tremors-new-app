@@ -22,3 +22,8 @@ Logger namedLogger(
         error: debug ?? name,
       ),
     );
+
+Logger typedLogger(Type type) {
+  final name = type.toString();
+  return namedLogger(name);
+}

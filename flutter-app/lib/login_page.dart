@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:provider/provider.dart';
-import 'package:tremors/auth/auth_service.dart';
 import 'package:tremors/auth/models.dart';
 import 'package:tremors/extensions.dart';
+import 'package:tremors/managers/security_manager.dart';
+import 'package:tremors/security/models.dart';
 import 'package:tremors/tremors_icons.dart';
 
 const _padding = SizedBox(height: 10);
@@ -36,7 +37,7 @@ class LoginPage extends StatelessWidget {
             width: mediaQuery.size.width / 4,
           ),
           _padding,
-          Expanded(child: Consumer<AuthService>(builder: _build)),
+          Expanded(child: Consumer<SecurityManager>(builder: _build)),
           _padding,
           Text(
             l10n.loginPageDevelopedBy("1.0.0"),
@@ -49,22 +50,25 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _build(BuildContext context, AuthService service, Widget? child) {
-    return switch (service.state) {
-      == AuthService.notLoggedState => _buildLogin(service, context),
-      == AuthService.waitingState => _buildWaiting(context),
-      Failed failed => _buildFailed(service, failed, context),
-      Logged logged => _buildLogged(logged, context),
-      _ => throw Exception("Invalid state!"),
+  Widget _build(BuildContext context, SecurityManager manager, Widget? child) {
+    return switch (manager.state) {
+      ValuedSecurityState(value: ValuedSecurityState.notLoggedState) =>
+        _buildLogin(manager, context),
+      ValuedSecurityState(value: ValuedSecurityState.waitingLoggedState) =>
+        _buildWaiting(context),
+      LoggedSecurityState() => _buildLogged(context),
+      FailedSecurityState(cause: final cause, provider: final provider) =>
+        _buildFailed(manager, cause, provider, context),
+      ValuedSecurityState() => throw UnimplementedError(),
     };
   }
 
-  Widget _buildLogged(Logged state, BuildContext context) {
+  Widget _buildLogged(BuildContext context) {
     context.delayedGo("/");
     return Container();
   }
 
-  Widget _buildLogin(AuthService service, BuildContext context) {
+  Widget _buildLogin(SecurityManager manager, BuildContext context) {
     final colorScheme = context.colorScheme;
     final textTheme = context.textTheme;
     final labelStyle = _labelStyle(textTheme, colorScheme);
@@ -73,7 +77,7 @@ class LoginPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         for (final provider in AuthProvider.values)
-          _loginButton(service, provider, context, colorScheme, labelStyle)
+          _loginButton(manager, provider, context, colorScheme, labelStyle)
       ].interpolate(const SizedBox(height: 10)),
     );
   }
@@ -105,7 +109,11 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildFailed(
-      AuthService service, Failed failed, BuildContext context) {
+    SecurityManager manager,
+    Exception cause,
+    AuthProvider provider,
+    BuildContext context,
+  ) {
     final colorScheme = context.colorScheme;
     final textTheme = context.textTheme;
     final style = textTheme.titleLarge!.copyWith(
@@ -131,7 +139,7 @@ class LoginPage extends StatelessWidget {
               ),
               Flexible(
                 child: Text(
-                  l10n.loginPageFailed(failed.provider.title),
+                  l10n.loginPageFailed(provider.title),
                   style: style,
                   textAlign: TextAlign.center,
                 ),
@@ -141,7 +149,7 @@ class LoginPage extends StatelessWidget {
         ),
         _padding,
         _filledButton(
-          onPressed: () => service.reset(),
+          onPressed: () => manager.reset(),
           child: Text(
             l10n.loginTryAgainLabel,
             style: _labelStyle(textTheme, colorScheme),
@@ -151,12 +159,12 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _loginButton(AuthService service, AuthProvider provider,
+  Widget _loginButton(SecurityManager manager, AuthProvider provider,
       BuildContext context, ColorScheme colorScheme, TextStyle textStyle) {
     final l10n = context.l10n;
     return _filledButton(
       onPressed: () {
-        service(provider);
+        manager(provider);
       },
       child: Row(
         children: [

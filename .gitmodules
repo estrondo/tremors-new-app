@@ -1,0 +1,6 @@
+[submodule "flutter-app/tremors-grpc"]
+	path = flutter-app/tremors-grpc
+	url = git@github.com:estrondo/tremors-grpc.git
+[submodule "flutter-app/shared"]
+	path = flutter-app/shared
+	url = git@github.com:estrondo/tremors-shared.git

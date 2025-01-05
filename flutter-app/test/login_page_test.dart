@@ -3,27 +3,31 @@ import 'package:go_router/go_router.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
-import 'package:tremors/auth/auth_service.dart';
 import 'package:tremors/auth/models.dart';
 import 'package:tremors/login_page.dart';
+import 'package:tremors/managers/security_manager.dart';
+import 'package:tremors/models/auth.dart';
+import 'package:tremors/security/models.dart';
 
 import 'async.dart';
 import 'en.dart';
 import 'extensions.dart';
 import 'login_page_test.mocks.dart';
 
-@GenerateMocks([AuthService, GoRouter])
+@GenerateMocks([SecurityManager, GoRouter])
 void main() {
-  provideDummy<AuthState>(AuthService.notLoggedState);
+  provideDummy<SecurityState>(ValuedSecurityState.notLogged());
+
   testWidgets(
     "When the user isn't logged the LoginPage should offer login options.",
     (tester) async {
-      final authService = MockAuthService();
+      final securityManager = MockSecurityManager();
 
-      when(authService.state).thenReturn(AuthService.notLoggedState);
+      when(securityManager.state).thenReturn(ValuedSecurityState.notLogged());
 
-      await tester.pumpWidgetWithApp(ChangeNotifierProvider<AuthService>.value(
-        value: authService,
+      await tester
+          .pumpWidgetWithApp(ChangeNotifierProvider<SecurityManager>.value(
+        value: securityManager,
         child: const LoginPage(),
       ));
 
@@ -39,20 +43,20 @@ void main() {
   testWidgets(
     "When the logging process has failed the LoginPage should display an error message.",
     (tester) async {
-      final authService = MockAuthService();
+      final securityManager = MockSecurityManager();
+      final expectedErrorMessage =
+          "Login with ${AuthProvider.google.title} has failed.";
 
-      const expectedErrorMessage = "My friend!";
-
-      when(authService.state).thenReturn(
-        Failed(
-          message: expectedErrorMessage,
-          exception: Exception("@@@"),
+      when(securityManager.state).thenReturn(
+        FailedSecurityState(
+          cause: Exception("@@@"),
           provider: AuthProvider.google,
         ),
       );
 
-      await tester.pumpWidgetWithApp(ChangeNotifierProvider<AuthService>.value(
-        value: authService,
+      await tester
+          .pumpWidgetWithApp(ChangeNotifierProvider<SecurityManager>.value(
+        value: securityManager,
         child: const LoginPage(),
       ));
 
@@ -61,16 +65,17 @@ void main() {
   );
 
   testWidgets(
-    "When the user is logged the LoginPage should redirect them to the main pages.",
+    "When the user is logged the LoginPage should redirect them to the main page.",
     (tester) async {
-      final service = MockAuthService();
+      final securityManager = MockSecurityManager();
       final goRouter = MockGoRouter();
 
-      when(service.state).thenReturn(
-        Logged(
-          id: "id",
-          email: "a@b.c",
-          name: "d",
+      when(securityManager.state).thenReturn(
+        LoggedSecurityState(
+          user: AuthorisedUser(
+            token: [1, 2, 3],
+            email: "a@b.c",
+          ),
           provider: AuthProvider.vk,
         ),
       );
@@ -79,8 +84,8 @@ void main() {
         () async {
           await tester.pumpWidgetWithApp(MultiProvider(
             providers: [
-              ChangeNotifierProvider<AuthService>.value(
-                value: service,
+              ChangeNotifierProvider<SecurityManager>.value(
+                value: securityManager,
               ),
             ],
             child: InheritedGoRouter(

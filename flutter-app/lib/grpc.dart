@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:grpc/grpc.dart';
-import 'package:tremors/generated/grpc/toph.pbgrpc.dart';
+import 'package:tremors/generated/grpc/toph.v1.pbgrpc.dart';
 import 'package:tremors/logger.dart';
 
 final _logger = namedLogger("GrpcModule");

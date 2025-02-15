@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: toph.proto
+//  source: toph.v1.proto
 //
 // @dart = 2.12
 

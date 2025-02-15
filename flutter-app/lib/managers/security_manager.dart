@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:tremors/auth/auth.dart';
 import 'package:tremors/auth/models.dart';
 import 'package:tremors/format/token.dart';
-import 'package:tremors/generated/grpc/toph.pbgrpc.dart';
+import 'package:tremors/generated/grpc/toph.v1.pbgrpc.dart';
 import 'package:tremors/grpc.dart';
 import 'package:tremors/logger.dart';
 import 'package:tremors/security/models.dart';
-
-const _version = "1";
 
 final _logger = typedLogger(SecurityManager);
 
@@ -49,9 +47,8 @@ class SecurityManager extends ChangeNotifier {
   ) async {
     try {
       final response = await _client.authorise(
-        GRPCAuthorisationRequest(
-          openid: GRPCOpenIdTokenAuthorisationRequest(
-            version: _version,
+        GrpcAuthorisationRequest(
+          openid: GrpcOpenIdTokenAuthorisationRequest(
             provider: provider.id,
             token: token,
           ),

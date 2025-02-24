@@ -210,6 +210,7 @@ class GrpcOpenIdTokenAuthorisationRequest extends $pb.GeneratedMessage {
   factory GrpcOpenIdTokenAuthorisationRequest({
     $core.String? provider,
     $core.String? token,
+    $core.String? device,
   }) {
     final $result = create();
     if (provider != null) {
@@ -217,6 +218,9 @@ class GrpcOpenIdTokenAuthorisationRequest extends $pb.GeneratedMessage {
     }
     if (token != null) {
       $result.token = token;
+    }
+    if (device != null) {
+      $result.device = device;
     }
     return $result;
   }
@@ -227,6 +231,7 @@ class GrpcOpenIdTokenAuthorisationRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GrpcOpenIdTokenAuthorisationRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'toph.v1'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'provider')
     ..aOS(2, _omitFieldNames ? '' : 'token')
+    ..aOS(3, _omitFieldNames ? '' : 'device')
     ..hasRequiredFields = false
   ;
 
@@ -268,15 +273,28 @@ class GrpcOpenIdTokenAuthorisationRequest extends $pb.GeneratedMessage {
   $core.bool hasToken() => $_has(1);
   @$pb.TagNumber(2)
   void clearToken() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get device => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set device($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDevice() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDevice() => clearField(3);
 }
 
 class GrpcAuthorisationResponse extends $pb.GeneratedMessage {
   factory GrpcAuthorisationResponse({
-    $core.List<$core.int>? token,
+    $core.List<$core.int>? accessToken,
+    $core.String? refreshToken,
   }) {
     final $result = create();
-    if (token != null) {
-      $result.token = token;
+    if (accessToken != null) {
+      $result.accessToken = accessToken;
+    }
+    if (refreshToken != null) {
+      $result.refreshToken = refreshToken;
     }
     return $result;
   }
@@ -285,7 +303,8 @@ class GrpcAuthorisationResponse extends $pb.GeneratedMessage {
   factory GrpcAuthorisationResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GrpcAuthorisationResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'toph.v1'), createEmptyInstance: create)
-    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'token', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'accessToken', $pb.PbFieldType.OY)
+    ..aOS(2, _omitFieldNames ? '' : 'refreshToken')
     ..hasRequiredFields = false
   ;
 
@@ -311,6 +330,75 @@ class GrpcAuthorisationResponse extends $pb.GeneratedMessage {
   static GrpcAuthorisationResponse? _defaultInstance;
 
   @$pb.TagNumber(1)
+  $core.List<$core.int> get accessToken => $_getN(0);
+  @$pb.TagNumber(1)
+  set accessToken($core.List<$core.int> v) { $_setBytes(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAccessToken() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAccessToken() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get refreshToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set refreshToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRefreshToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRefreshToken() => clearField(2);
+}
+
+class GrpcRefreshAuthorisation extends $pb.GeneratedMessage {
+  factory GrpcRefreshAuthorisation({
+    $core.List<$core.int>? token,
+    $core.String? refreshToken,
+    $core.String? device,
+  }) {
+    final $result = create();
+    if (token != null) {
+      $result.token = token;
+    }
+    if (refreshToken != null) {
+      $result.refreshToken = refreshToken;
+    }
+    if (device != null) {
+      $result.device = device;
+    }
+    return $result;
+  }
+  GrpcRefreshAuthorisation._() : super();
+  factory GrpcRefreshAuthorisation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GrpcRefreshAuthorisation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GrpcRefreshAuthorisation', package: const $pb.PackageName(_omitMessageNames ? '' : 'toph.v1'), createEmptyInstance: create)
+    ..a<$core.List<$core.int>>(1, _omitFieldNames ? '' : 'token', $pb.PbFieldType.OY)
+    ..aOS(2, _omitFieldNames ? '' : 'refreshToken')
+    ..aOS(3, _omitFieldNames ? '' : 'device')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GrpcRefreshAuthorisation clone() => GrpcRefreshAuthorisation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GrpcRefreshAuthorisation copyWith(void Function(GrpcRefreshAuthorisation) updates) => super.copyWith((message) => updates(message as GrpcRefreshAuthorisation)) as GrpcRefreshAuthorisation;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GrpcRefreshAuthorisation create() => GrpcRefreshAuthorisation._();
+  GrpcRefreshAuthorisation createEmptyInstance() => create();
+  static $pb.PbList<GrpcRefreshAuthorisation> createRepeated() => $pb.PbList<GrpcRefreshAuthorisation>();
+  @$core.pragma('dart2js:noInline')
+  static GrpcRefreshAuthorisation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GrpcRefreshAuthorisation>(create);
+  static GrpcRefreshAuthorisation? _defaultInstance;
+
+  @$pb.TagNumber(1)
   $core.List<$core.int> get token => $_getN(0);
   @$pb.TagNumber(1)
   set token($core.List<$core.int> v) { $_setBytes(0, v); }
@@ -318,6 +406,24 @@ class GrpcAuthorisationResponse extends $pb.GeneratedMessage {
   $core.bool hasToken() => $_has(0);
   @$pb.TagNumber(1)
   void clearToken() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get refreshToken => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set refreshToken($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRefreshToken() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRefreshToken() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get device => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set device($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDevice() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDevice() => clearField(3);
 }
 
 

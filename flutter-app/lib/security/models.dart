@@ -24,11 +24,9 @@ class ValuedSecurityState extends SecurityState {
 
 class LoggedSecurityState extends SecurityState {
   final AuthorisedUser user;
-  final AuthProvider provider;
 
   LoggedSecurityState({
     required this.user,
-    required this.provider,
   }) : super(true);
 }
 

@@ -53,12 +53,24 @@ class LoginPage extends StatelessWidget {
   Widget _build(BuildContext context, SecurityManager manager, Widget? child) {
     return switch (manager.state) {
       ValuedSecurityState(value: ValuedSecurityState.notLoggedState) =>
-        _buildLogin(manager, context),
+        _buildLogin(
+          manager,
+          context,
+        ),
       ValuedSecurityState(value: ValuedSecurityState.waitingLoggedState) =>
-        _buildWaiting(context),
-      LoggedSecurityState() => _buildLogged(context),
+        _buildWaiting(
+          context,
+        ),
+      LoggedSecurityState() => _buildLogged(
+          context,
+        ),
       FailedSecurityState(cause: final cause, provider: final provider) =>
-        _buildFailed(manager, cause, provider, context),
+        _buildFailed(
+          manager,
+          cause,
+          provider,
+          context,
+        ),
       ValuedSecurityState() => throw UnimplementedError(),
     };
   }

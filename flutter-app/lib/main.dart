@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tremors/firebase_options.dart';
 import 'package:tremors/grpc.dart';
 import 'package:tremors/l10n.dart';
@@ -11,6 +12,7 @@ import 'package:tremors/managers/search.dart';
 import 'package:tremors/managers/security_manager.dart';
 import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/navigation.dart';
+import 'package:tremors/security/storage.dart';
 import 'package:tremors/theme.dart';
 import 'package:tremors/tremors_page.dart';
 
@@ -66,6 +68,7 @@ void main() async {
   );
 
   final grpcModule = await GrpcModule.create();
+  final securityStorage = SecurityStorage(SharedPreferencesAsync());
 
   runApp(Provider.value(
     value: tremorsTheme,
@@ -75,7 +78,11 @@ void main() async {
         ChangeNotifierProvider(create: SearchManager.create),
         ChangeNotifierProvider(create: Moment.create),
         ChangeNotifierProvider(
-          create: (ctx) => SecurityManager.create(ctx, grpcModule),
+          create: (ctx) => SecurityManager.create(
+            ctx,
+            grpcModule,
+            securityStorage,
+          ),
         ),
       ],
       child: SafeArea(child: app),

@@ -63,23 +63,41 @@ const GrpcOpenIdTokenAuthorisationRequest$json = {
   '2': [
     {'1': 'provider', '3': 1, '4': 1, '5': 9, '10': 'provider'},
     {'1': 'token', '3': 2, '4': 1, '5': 9, '10': 'token'},
+    {'1': 'device', '3': 3, '4': 1, '5': 9, '10': 'device'},
   ],
 };
 
 /// Descriptor for `GrpcOpenIdTokenAuthorisationRequest`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List grpcOpenIdTokenAuthorisationRequestDescriptor = $convert.base64Decode(
     'CiNHcnBjT3BlbklkVG9rZW5BdXRob3Jpc2F0aW9uUmVxdWVzdBIaCghwcm92aWRlchgBIAEoCV'
-    'IIcHJvdmlkZXISFAoFdG9rZW4YAiABKAlSBXRva2Vu');
+    'IIcHJvdmlkZXISFAoFdG9rZW4YAiABKAlSBXRva2VuEhYKBmRldmljZRgDIAEoCVIGZGV2aWNl');
 
 @$core.Deprecated('Use grpcAuthorisationResponseDescriptor instead')
 const GrpcAuthorisationResponse$json = {
   '1': 'GrpcAuthorisationResponse',
   '2': [
-    {'1': 'token', '3': 1, '4': 1, '5': 12, '10': 'token'},
+    {'1': 'access_token', '3': 1, '4': 1, '5': 12, '10': 'accessToken'},
+    {'1': 'refresh_token', '3': 2, '4': 1, '5': 9, '10': 'refreshToken'},
   ],
 };
 
 /// Descriptor for `GrpcAuthorisationResponse`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List grpcAuthorisationResponseDescriptor = $convert.base64Decode(
-    'ChlHcnBjQXV0aG9yaXNhdGlvblJlc3BvbnNlEhQKBXRva2VuGAEgASgMUgV0b2tlbg==');
+    'ChlHcnBjQXV0aG9yaXNhdGlvblJlc3BvbnNlEiEKDGFjY2Vzc190b2tlbhgBIAEoDFILYWNjZX'
+    'NzVG9rZW4SIwoNcmVmcmVzaF90b2tlbhgCIAEoCVIMcmVmcmVzaFRva2Vu');
+
+@$core.Deprecated('Use grpcRefreshAuthorisationDescriptor instead')
+const GrpcRefreshAuthorisation$json = {
+  '1': 'GrpcRefreshAuthorisation',
+  '2': [
+    {'1': 'token', '3': 1, '4': 1, '5': 12, '10': 'token'},
+    {'1': 'refresh_token', '3': 2, '4': 1, '5': 9, '10': 'refreshToken'},
+    {'1': 'device', '3': 3, '4': 1, '5': 9, '10': 'device'},
+  ],
+};
+
+/// Descriptor for `GrpcRefreshAuthorisation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List grpcRefreshAuthorisationDescriptor = $convert.base64Decode(
+    'ChhHcnBjUmVmcmVzaEF1dGhvcmlzYXRpb24SFAoFdG9rZW4YASABKAxSBXRva2VuEiMKDXJlZn'
+    'Jlc2hfdG9rZW4YAiABKAlSDHJlZnJlc2hUb2tlbhIWCgZkZXZpY2UYAyABKAlSBmRldmljZQ==');
 

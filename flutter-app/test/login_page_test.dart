@@ -73,10 +73,10 @@ void main() {
       when(securityManager.state).thenReturn(
         LoggedSecurityState(
           user: AuthorisedUser(
-            token: [1, 2, 3],
+            accessToken: [1, 2, 3],
             email: "a@b.c",
+            name: "Galileo",
           ),
-          provider: AuthProvider.vk,
         ),
       );
 

@@ -7,22 +7,44 @@ import 'package:tremors/format/token.dart';
 import 'package:tremors/generated/grpc/toph.v1.pbgrpc.dart';
 import 'package:tremors/grpc.dart';
 import 'package:tremors/logger.dart';
+import 'package:tremors/models/auth.dart';
 import 'package:tremors/security/models.dart';
+import 'package:tremors/security/storage.dart';
 
 final _logger = typedLogger(SecurityManager);
 
 class SecurityManager extends ChangeNotifier {
   final SecurityServiceClient _client;
+  final SecurityStorage _securityStorage;
 
-  SecurityState _state = ValuedSecurityState.notLogged();
+  SecurityState _state = ValuedSecurityState.waiting();
   SecurityState get state => _state;
 
   bool get isLogged => _state.isLogged;
 
-  factory SecurityManager.create(BuildContext context, GrpcModule grpcModule) =>
-      SecurityManager(grpcModule.securityServiceClient(context));
+  factory SecurityManager.create(
+    BuildContext context,
+    GrpcModule grpcModule,
+    SecurityStorage securityStorage,
+  ) =>
+      SecurityManager(
+        grpcModule.securityServiceClient(context),
+        securityStorage,
+      );
 
-  SecurityManager(this._client);
+  SecurityManager(this._client, this._securityStorage) {
+    (_securityStorage.loadAuthorisedUser() as Future<AuthorisedUser?>).then((user) {
+      _logger.d("Trying to load stored authorised user.");
+      if (user != null) {
+        _state = LoggedSecurityState(user: user);
+      } else {
+        _state = ValuedSecurityState.notLogged();
+      }
+      notifyListeners();
+    }).onError((_, __) {
+      _state = ValuedSecurityState.notLogged();
+    });
+  }
 
   void call(AuthProvider provider) async {
     _state = ValuedSecurityState.waiting();
@@ -41,6 +63,12 @@ class SecurityManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  FutureOr<void> logout() async {
+    await _securityStorage.cleanUp();
+    _state = ValuedSecurityState.notLogged();
+    notifyListeners();
+  }
+
   FutureOr<SecurityState> _authoriseOpenIdToken(
     String token,
     AuthProvider provider,
@@ -56,10 +84,13 @@ class SecurityManager extends ChangeNotifier {
       );
 
       _logger.d("Toph has authorised.");
+      final user = await _securityStorage.store(
+        readAuthorisedUser(response.accessToken),
+        response.refreshToken,
+      );
 
       return LoggedSecurityState(
-        user: readAuthorisedUser(response.token),
-        provider: provider,
+        user: user,
       );
     } on Exception catch (cause) {
       _logger.w("Unable to authorise with Toph.", error: cause);

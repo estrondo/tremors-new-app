@@ -1,9 +1,11 @@
 class AuthorisedUser {
-  final List<int> token;
+  final List<int> accessToken;
   final String email;
+  final String name;
 
   AuthorisedUser({
-    required this.token,
+    required this.accessToken,
     required this.email,
+    required this.name,
   });
 }

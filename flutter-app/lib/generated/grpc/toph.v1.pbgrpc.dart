@@ -63,6 +63,10 @@ class SecurityServiceClient extends $grpc.Client {
       '/toph.v1.SecurityService/Authorise',
       ($0.GrpcAuthorisationRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GrpcAuthorisationResponse.fromBuffer(value));
+  static final _$refresh = $grpc.ClientMethod<$0.GrpcRefreshAuthorisation, $0.GrpcAuthorisationResponse>(
+      '/toph.v1.SecurityService/Refresh',
+      ($0.GrpcRefreshAuthorisation value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GrpcAuthorisationResponse.fromBuffer(value));
 
   SecurityServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -72,6 +76,10 @@ class SecurityServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.GrpcAuthorisationResponse> authorise($0.GrpcAuthorisationRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$authorise, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GrpcAuthorisationResponse> refresh($0.GrpcRefreshAuthorisation request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$refresh, request, options: options);
   }
 }
 
@@ -87,11 +95,23 @@ abstract class SecurityServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GrpcAuthorisationRequest.fromBuffer(value),
         ($0.GrpcAuthorisationResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GrpcRefreshAuthorisation, $0.GrpcAuthorisationResponse>(
+        'Refresh',
+        refresh_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.GrpcRefreshAuthorisation.fromBuffer(value),
+        ($0.GrpcAuthorisationResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.GrpcAuthorisationResponse> authorise_Pre($grpc.ServiceCall call, $async.Future<$0.GrpcAuthorisationRequest> request) async {
     return authorise(call, await request);
   }
 
+  $async.Future<$0.GrpcAuthorisationResponse> refresh_Pre($grpc.ServiceCall call, $async.Future<$0.GrpcRefreshAuthorisation> request) async {
+    return refresh(call, await request);
+  }
+
   $async.Future<$0.GrpcAuthorisationResponse> authorise($grpc.ServiceCall call, $0.GrpcAuthorisationRequest request);
+  $async.Future<$0.GrpcAuthorisationResponse> refresh($grpc.ServiceCall call, $0.GrpcRefreshAuthorisation request);
 }

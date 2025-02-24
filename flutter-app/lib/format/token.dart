@@ -15,7 +15,8 @@ AuthorisedUser readAuthorisedUser(List<int> bytes) {
   final name = reader.readJavaUTF8();
 
   return AuthorisedUser(
-    token: bytes,
+    accessToken: bytes,
     email: email,
+    name: name,
   );
 }

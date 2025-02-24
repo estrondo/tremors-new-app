@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:tremors/components/input.dart';
 import 'package:tremors/components/section.dart';
 import 'package:tremors/components/square_button.dart';
 import 'package:tremors/extensions.dart';
 import 'package:tremors/functions.dart';
 import 'package:tremors/l10n.dart';
+import 'package:tremors/managers/security_manager.dart';
 import 'package:tremors/tremors_panel.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -18,7 +21,10 @@ class SettingsPage extends StatelessWidget {
       title: l10n.settingsPanelTitle,
       bottomHeight: 150,
       top: _buildSettings(context, l10n),
-      bottom: _buildDanger(context, l10n),
+      bottom: Consumer<SecurityManager>(
+        builder: (context, securityManager, _) =>
+            _buildDanger(context, securityManager, l10n),
+      ),
     );
   }
 
@@ -41,7 +47,11 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDanger(BuildContext context, AppLocalizations l10n) {
+  Widget _buildDanger(
+    BuildContext context,
+    SecurityManager securityManager,
+    AppLocalizations l10n,
+  ) {
     final colorScheme = context.colorScheme;
     final textTheme = context.textTheme;
 
@@ -55,7 +65,7 @@ class SettingsPage extends StatelessWidget {
             SizedBox(
               width: 200,
               child: SquaredButton(
-                onPressed: () {},
+                onPressed: () => _logoutAccount(context, securityManager),
                 backgroundColor: colorScheme.onError,
                 child: Text(
                   l10n.settingsLogoutLabel,
@@ -68,7 +78,7 @@ class SettingsPage extends StatelessWidget {
             SizedBox(
               width: 200,
               child: SquaredButton(
-                onPressed: () {},
+                onPressed: () => _deleteAccount(context, securityManager),
                 backgroundColor: colorScheme.error,
                 child: Text(
                   l10n.settingsDeleteAccountLabel,
@@ -82,5 +92,20 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _logoutAccount(
+      BuildContext context, SecurityManager securityManager) async {
+    await securityManager.logout();
+    if (context.mounted) {
+      context.go("/");
+    }
+  }
+
+  void _deleteAccount(
+      BuildContext context, SecurityManager securityManager) async {
+    if (context.mounted) {
+      context.go("/");
+    }
   }
 }

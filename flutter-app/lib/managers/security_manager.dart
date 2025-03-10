@@ -8,6 +8,7 @@ import 'package:tremors/generated/grpc/toph.v1.pbgrpc.dart';
 import 'package:tremors/grpc.dart';
 import 'package:tremors/logger.dart';
 import 'package:tremors/models/auth.dart';
+import 'package:tremors/ref.dart';
 import 'package:tremors/security/models.dart';
 import 'package:tremors/security/storage.dart';
 
@@ -16,33 +17,45 @@ final _logger = typedLogger(SecurityManager);
 class SecurityManager extends ChangeNotifier {
   final SecurityServiceClient _client;
   final SecurityStorage _securityStorage;
+  final Ref<AuthorisedUser> _authorisedUserRef;
 
   SecurityState _state = ValuedSecurityState.waiting();
   SecurityState get state => _state;
 
   bool get isLogged => _state.isLogged;
 
+  AuthorisedUser? get authorisedUser => switch (_state) {
+        LoggedSecurityState(user: final user) => user,
+        _ => null,
+      };
+
   factory SecurityManager.create(
     BuildContext context,
     GrpcModule grpcModule,
     SecurityStorage securityStorage,
+    Ref<AuthorisedUser> authorisedUserRef,
   ) =>
       SecurityManager(
-        grpcModule.securityServiceClient(context),
+        grpcModule.securityServiceClient(),
         securityStorage,
+        authorisedUserRef,
       );
 
-  SecurityManager(this._client, this._securityStorage) {
-    (_securityStorage.loadAuthorisedUser() as Future<AuthorisedUser?>).then((user) {
+  SecurityManager(
+      this._client, this._securityStorage, this._authorisedUserRef) {
+    (_securityStorage.loadAuthorisedUser() as Future<AuthorisedUser?>)
+        .then((user) {
       _logger.d("Trying to load stored authorised user.");
       if (user != null) {
         _state = LoggedSecurityState(user: user);
       } else {
         _state = ValuedSecurityState.notLogged();
       }
+      _authorisedUserRef.value = user;
       notifyListeners();
     }).onError((_, __) {
       _state = ValuedSecurityState.notLogged();
+      _authorisedUserRef.value = null;
     });
   }
 
@@ -54,10 +67,13 @@ class SecurityManager extends ChangeNotifier {
       _logger.d("Authentication with ${provider.title}.");
       final token = await authorise(provider);
       _logger.d("Authorisation with Toph.");
-      _state = await _authoriseOpenIdToken(token, provider);
+      final (newState, newUser) = await _authoriseOpenIdToken(token, provider);
+      _state = newState;
+      _authorisedUserRef.value = newUser;
     } on Exception catch (cause) {
       _logger.w("Unable to authorise!", error: cause);
       _state = FailedSecurityState(cause: cause, provider: provider);
+      _authorisedUserRef.value = null;
     }
 
     notifyListeners();
@@ -69,7 +85,7 @@ class SecurityManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  FutureOr<SecurityState> _authoriseOpenIdToken(
+  FutureOr<(SecurityState, AuthorisedUser?)> _authoriseOpenIdToken(
     String token,
     AuthProvider provider,
   ) async {
@@ -89,12 +105,18 @@ class SecurityManager extends ChangeNotifier {
         response.refreshToken,
       );
 
-      return LoggedSecurityState(
-        user: user,
+      return (
+        LoggedSecurityState(
+          user: user,
+        ),
+        user,
       );
     } on Exception catch (cause) {
       _logger.w("Unable to authorise with Toph.", error: cause);
-      return FailedSecurityState(cause: cause, provider: provider);
+      return (
+        FailedSecurityState(cause: cause, provider: provider),
+        null,
+      );
     }
   }
 

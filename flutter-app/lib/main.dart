@@ -2,7 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tremors/centre.dart';
+import 'package:tremors/dogs.g.dart';
 import 'package:tremors/firebase_options.dart';
 import 'package:tremors/grpc.dart';
 import 'package:tremors/l10n.dart';
@@ -11,8 +12,10 @@ import 'package:tremors/managers/moment.dart';
 import 'package:tremors/managers/search.dart';
 import 'package:tremors/managers/security_manager.dart';
 import 'package:tremors/map/map_manager.dart';
+import 'package:tremors/models/auth.dart';
 import 'package:tremors/navigation.dart';
-import 'package:tremors/security/storage.dart';
+import 'package:tremors/ref.dart';
+import 'package:tremors/security.dart';
 import 'package:tremors/theme.dart';
 import 'package:tremors/tremors_page.dart';
 
@@ -67,21 +70,36 @@ void main() async {
     ),
   );
 
-  final grpcModule = await GrpcModule.create();
-  final securityStorage = SecurityStorage(SharedPreferencesAsync());
+  await initialiseDogs();
+
+  final authorisedUserRef = Ref<AuthorisedUser>();
+
+  final grpcModule = await GrpcModule.create(authorisedUserRef);
+  final securityModule = await SecurityModule.create();
+  final centreModule = CentreModule(
+    grpcModule: grpcModule,
+    securityModule: securityModule,
+  );
+
 
   runApp(Provider.value(
     value: tremorsTheme,
     child: MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: MapManager.create),
+        ChangeNotifierProvider(
+          create: (ctx) => MapManager.create(
+            ctx,
+            centreModule.objectService,
+          ),
+        ),
         ChangeNotifierProvider(create: SearchManager.create),
         ChangeNotifierProvider(create: Moment.create),
         ChangeNotifierProvider(
           create: (ctx) => SecurityManager.create(
             ctx,
             grpcModule,
-            securityStorage,
+            securityModule.securityStorage,
+            authorisedUserRef,
           ),
         ),
       ],

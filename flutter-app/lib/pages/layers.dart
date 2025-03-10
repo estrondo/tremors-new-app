@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tremors/components/section.dart';
 import 'package:tremors/extensions.dart';
 import 'package:tremors/map/map_manager.dart';
+import 'package:tremors/models/mapping.dart';
 import 'package:tremors/tremors_panel.dart';
 
 const _itemWidth = 100.0;

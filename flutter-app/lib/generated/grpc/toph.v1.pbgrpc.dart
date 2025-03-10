@@ -57,6 +57,56 @@ abstract class AccountServiceBase extends $grpc.Service {
 
   $async.Future<$0.GrpcAccount> update($grpc.ServiceCall call, $0.GrpcUpdateAccount request);
 }
+@$pb.GrpcServiceName('toph.v1.ObjectStorageService')
+class ObjectStorageServiceClient extends $grpc.Client {
+  static final _$system = $grpc.ClientMethod<$0.GrpcObject_ReadRequest, $0.GrpcObject_Response>(
+      '/toph.v1.ObjectStorageService/System',
+      ($0.GrpcObject_ReadRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GrpcObject_Response.fromBuffer(value));
+  static final _$user = $grpc.ClientMethod<$0.GrpcObject_Request, $0.GrpcObject_Response>(
+      '/toph.v1.ObjectStorageService/User',
+      ($0.GrpcObject_Request value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GrpcObject_Response.fromBuffer(value));
+
+  ObjectStorageServiceClient($grpc.ClientChannel channel,
+      {$grpc.CallOptions? options,
+      $core.Iterable<$grpc.ClientInterceptor>? interceptors})
+      : super(channel, options: options,
+        interceptors: interceptors);
+
+  $grpc.ResponseStream<$0.GrpcObject_Response> system($async.Stream<$0.GrpcObject_ReadRequest> request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$system, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.GrpcObject_Response> user($async.Stream<$0.GrpcObject_Request> request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$user, request, options: options);
+  }
+}
+
+@$pb.GrpcServiceName('toph.v1.ObjectStorageService')
+abstract class ObjectStorageServiceBase extends $grpc.Service {
+  $core.String get $name => 'toph.v1.ObjectStorageService';
+
+  ObjectStorageServiceBase() {
+    $addMethod($grpc.ServiceMethod<$0.GrpcObject_ReadRequest, $0.GrpcObject_Response>(
+        'System',
+        system,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.GrpcObject_ReadRequest.fromBuffer(value),
+        ($0.GrpcObject_Response value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GrpcObject_Request, $0.GrpcObject_Response>(
+        'User',
+        user,
+        true,
+        true,
+        ($core.List<$core.int> value) => $0.GrpcObject_Request.fromBuffer(value),
+        ($0.GrpcObject_Response value) => value.writeToBuffer()));
+  }
+
+  $async.Stream<$0.GrpcObject_Response> system($grpc.ServiceCall call, $async.Stream<$0.GrpcObject_ReadRequest> request);
+  $async.Stream<$0.GrpcObject_Response> user($grpc.ServiceCall call, $async.Stream<$0.GrpcObject_Request> request);
+}
 @$pb.GrpcServiceName('toph.v1.SecurityService')
 class SecurityServiceClient extends $grpc.Client {
   static final _$authorise = $grpc.ClientMethod<$0.GrpcAuthorisationRequest, $0.GrpcAuthorisationResponse>(

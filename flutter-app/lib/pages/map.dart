@@ -77,29 +77,12 @@ class _MapPage extends State<MapPage> {
     BuildContext context,
     MapManager mapManager,
     Widget? child,
-  ) {
-    return FlutterMap(
-      options: MapOptions(
-        onMapReady: () => mapManager.resolve(_mapController),
-      ),
-      children: _convert(mapManager.layers),
-    );
-  }
-
-  List<Widget> _convert(List<LayerDescriptor> layers) {
-    List<Widget> result = [];
-    for (final descriptor in layers) {
-      switch (descriptor) {
-        case TileLayerDescriptor descriptor:
-          result.add(_createTileLayer(descriptor));
-      }
-    }
-
-    return result;
-  }
-
-  Widget _createTileLayer(TileLayerDescriptor descriptor) => TileLayer(
-        urlTemplate: descriptor.url,
-        userAgentPackageName: descriptor.provider,
+  ) =>
+      FlutterMap(
+        mapController: _mapController,
+        options: MapOptions(
+          onMapReady: () => mapManager.resolve(_mapController),
+        ),
+        children: const [],
       );
 }

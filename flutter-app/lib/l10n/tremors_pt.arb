@@ -25,6 +25,11 @@
 
   "layersMapSectionTitle" :  "Selecione um mapa",
   "layersInformationSectionTitle": "Selecione algumas informações",
+
+
+  "mainMapError": "Não foi possível carregar o mapa.\nPor favor, tente novamente.",
+  "mainMapLoading": "Carregando dados do mapa...",
+
   "settingsInputNameLabel":  "Nome",
   "settingsInputEmailLabel":  "E-mail",
   "settingsDangerLabel":  "Perigo",

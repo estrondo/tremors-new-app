@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/components/section.dart';
@@ -6,10 +8,10 @@ import 'package:tremors/map/map_manager.dart';
 import 'package:tremors/models/mapping.dart';
 import 'package:tremors/tremors_panel.dart';
 
-const _itemWidth = 100.0;
+const _mapTypeItemWidth = 110.0;
 
-const _iconHeight = 40.0;
 const _iconWidth = 40.0;
+const _iconHeight = 40.0;
 
 class LayersPage extends StatelessWidget {
   const LayersPage({super.key});
@@ -26,14 +28,18 @@ class LayersPage extends StatelessWidget {
             flex: 2,
             child: TremorsSection(
               title: l10n.layersMapSectionTitle,
-              child: Consumer<MapManager>(builder: _buildMapTypeList),
+              child: Selector<MapManager, List<MapTypeState>>(
+                selector: (_, mapManager) => mapManager.mapTypes,
+                builder: _buildMapTypeList,
+              ),
             ),
           ),
           Expanded(
             flex: 5,
             child: TremorsSection(
               title: l10n.layersInformationSectionTitle,
-              child: Consumer<MapManager>(
+              child: Selector<MapManager, List<MapInfoState>>(
+                selector: (_, mapManager) => mapManager.mapInfo,
                 builder: _buildMapInfoGrid,
               ),
             ),
@@ -45,32 +51,29 @@ class LayersPage extends StatelessWidget {
 
   Widget _buildMapTypeList(
     BuildContext context,
-    MapManager mapManager,
+    List<MapTypeState> mapType,
     Widget? child,
   ) {
     final colorScheme = context.colorScheme;
     final textTheme = context.textTheme;
+    final l10n = context.l10n;
 
-    Widget build(MapType mapType) => Padding(
-          padding: const EdgeInsets.all(5),
+    Widget buildItem(MapTypeState mapType) => SizedBox(
+          width: _mapTypeItemWidth,
           child: Tooltip(
-            message: mapType.description,
+            message: l10n(mapType.description),
             child: Column(
-              key: ValueKey(mapType.id),
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _isActive(
+                _buildMapItemButton(
                   mapType.active,
                   colorScheme,
-                  SizedBox(
-                    width: _iconWidth,
-                    height: _iconHeight,
-                    child: ColoredBox(color: colorScheme.error),
-                  ),
+                  mapType.activate,
+                  mapType.icon,
                 ),
                 Text(
-                  mapType.title,
+                  l10n(mapType.title),
                   style: textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 )
@@ -81,39 +84,35 @@ class LayersPage extends StatelessWidget {
 
     return ListView(
       scrollDirection: Axis.horizontal,
-      itemExtent: _itemWidth,
       children: [
-        for (final mapType in mapManager.mapTypes) build(mapType),
-      ],
+        for (final mapType in mapType) buildItem(mapType),
+      ].interpolate(const SizedBox(width: 10)),
     );
   }
 
   Widget _buildMapInfoGrid(
     BuildContext context,
-    MapManager mapManager,
+    List<MapInfoState> mapInfo,
     Widget? child,
   ) {
     final colorScheme = context.colorScheme;
     final textTheme = context.textTheme;
+    final l10n = context.l10n;
 
-    Widget build(MapInfo mapInfo) {
+    Widget buildItem(MapInfoState mapInfo) {
       return Tooltip(
-        message: mapInfo.description,
+        message: l10n(mapInfo.description),
         child: Column(
           children: [
-            _isActive(
+            _buildMapItemButton(
               mapInfo.active,
               colorScheme,
-              SizedBox(
-                width: _iconWidth,
-                height: _iconHeight,
-                child: ColoredBox(
-                  color: colorScheme.onPrimary,
-                ),
-              ),
+              mapInfo.toggle,
+              mapInfo.icon,
             ),
             Text(
-              mapInfo.title,
+              l10n(mapInfo.title),
+              textAlign: TextAlign.center,
               style: textTheme.bodyMedium,
             ),
           ],
@@ -122,22 +121,36 @@ class LayersPage extends StatelessWidget {
     }
 
     return GridView.count(
-      crossAxisCount: 4,
+      crossAxisCount: 3,
       children: [
-        for (final mapInfo in mapManager.mapInfo) build(mapInfo),
+        for (final mapInfo in mapInfo) buildItem(mapInfo),
       ],
     );
   }
 
-  Widget _isActive(bool active, ColorScheme colorScheme, Widget child) {
-    return !active
-        ? child
-        : DecoratedBox(
-            decoration: BoxDecoration(
-              border: Border.all(color: colorScheme.primary, width: 4),
-            ),
-            position: DecorationPosition.foreground,
-            child: child,
-          );
+  Widget _buildMapItemButton(
+    bool active,
+    ColorScheme colorScheme,
+    void Function() onTap,
+    Uint8List icon,
+  ) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            width: 2,
+            color: active ? colorScheme.primary : colorScheme.outlineVariant,
+          ),
+        ),
+        child: Image.memory(
+          icon,
+          height: _iconHeight,
+          width: _iconWidth,
+        ),
+      ),
+    );
   }
 }

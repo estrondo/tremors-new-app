@@ -6,11 +6,12 @@ class TremorsSection extends StatelessWidget {
   final Widget child;
   final Alignment? titleAlignment;
 
-  const TremorsSection(
-      {super.key,
-      required this.title,
-      required this.child,
-      this.titleAlignment});
+  const TremorsSection({
+    super.key,
+    required this.title,
+    required this.child,
+    this.titleAlignment,
+  });
 
   @override
   Widget build(BuildContext context) {

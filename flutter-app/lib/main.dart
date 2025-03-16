@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tremors/centre.dart';
-import 'package:tremors/dogs.g.dart';
 import 'package:tremors/firebase_options.dart';
 import 'package:tremors/grpc.dart';
 import 'package:tremors/l10n.dart';
@@ -69,8 +68,6 @@ void main() async {
       ],
     ),
   );
-
-  await initialiseDogs();
 
   final authorisedUserRef = Ref<AuthorisedUser>();
 

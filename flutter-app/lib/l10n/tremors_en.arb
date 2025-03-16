@@ -26,6 +26,10 @@
   "layersMapSectionTitle": "Choose a map",
   "layersInformationSectionTitle": "Select some information",
 
+  "mainMapError": "Unable to load the map.\nPlease try again later.",
+  "mainMapLoading": "Loading map data...",
+
+
 
   "settingsInputNameLabel": "Name",
   "settingsInputEmailLabel": "E-mail",

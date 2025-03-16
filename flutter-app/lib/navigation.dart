@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' hide Page;
 import 'package:go_router/go_router.dart';
 import 'package:tremors/login_page.dart';
-import 'package:tremors/pages/map.dart';
-import 'package:tremors/pages/layers.dart';
+import 'package:tremors/pages/map_page.dart';
+import 'package:tremors/pages/layers_page.dart';
 import 'package:tremors/pages/search.dart';
 import 'package:tremors/pages/settings.dart';
 

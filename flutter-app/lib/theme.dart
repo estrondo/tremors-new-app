@@ -32,6 +32,7 @@ FutureOr<TremorsTheme> createTheme() async {
     onSurface: const Color(0xff031728),
     onPrimary: const Color(0xffe9f4ff),
     onError: const Color(0xffffe2fa),
+    surfaceBright: const Color(0xff71c6f3),
   );
 
   final textTheme = GoogleFonts.barlowCondensedTextTheme();

@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:dogs_cbor/dogs_cbor.dart';
-import 'package:dogs_core/dogs_core.dart';
 import 'package:grpc/grpc.dart';
 import 'package:tremors/errors.dart';
+import 'package:tremors/format/object_codec.dart';
 import 'package:tremors/generated/grpc/toph.v1.pbgrpc.dart';
 import 'package:tremors/logger.dart';
 import 'package:tremors/security/grpc.dart';
@@ -26,7 +25,7 @@ class ObjectService {
           ],
         );
 
-  Future<T> fetchSystemObject<T>(String path, T defaultValue) async {
+  Future<T?> fetchSystemObject<T>(String path, ObjectDecoder<T> decoder, [T? defaultValue]) async {
     final [folder, name] = path.split('/');
     final result = await _executeSystemRequest(
       GrpcObject_ReadOperation(
@@ -40,9 +39,9 @@ class ObjectService {
 
     if (result.whichContent() == GrpcObject_Result_Content.fetchObject) {
       final object = result.fetchObject.exists
-          ? dogs.fromCbor<T>(result.fetchObject.content)
-          : defaultValue ??
-              (throw IllegalArgumentException("No default value provided!"));
+          ? decoder.decode(result.fetchObject.content)
+          : defaultValue;
+
       _logger.d("Fetched system object from $path.");
       return object;
     } else {
@@ -50,7 +49,7 @@ class ObjectService {
     }
   }
 
-  FutureOr<T> fetchUserObject<T>(String path, T? defaultValue) async {
+  FutureOr<T?> fetchUserObject<T>(String path, ObjectDecoder<T> decoder, [T? defaultValue]) async {
     final [folder, name] = path.split('/');
 
     final result = await _executeUserReadRequest(
@@ -65,9 +64,8 @@ class ObjectService {
 
     if (result.whichContent() == GrpcObject_Result_Content.fetchObject) {
       final object = result.fetchObject.exists
-          ? dogs.fromCbor<T>(result.fetchObject.content)
-          : defaultValue ??
-              (throw IllegalArgumentException("No default value provided!"));
+          ? decoder.decode(result.fetchObject.content)
+          : defaultValue;
       _logger.d("Fetched an user object from $path.");
       return object;
     } else {
@@ -75,11 +73,11 @@ class ObjectService {
     }
   }
 
-  FutureOr<T> updateUserObject<T>(String path, T object) async {
+  FutureOr<T> updateUserObject<T>(String path, ObjectEncoder<T> encoder, T object) async {
     final [folder, name] = path.split('/');
     List<int> content;
     try {
-      content = dogs.toCbor(object);
+      content = encoder.encode(object);
     } catch (e, s) {
       _logger.e("Unable to convert the object!", error: e, stackTrace: s);
       rethrow;

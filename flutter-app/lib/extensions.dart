@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tremors/l10n.dart';
+import 'package:tremors/models/general.dart';
 
 extension BuildContextPlus on BuildContext {
   ColorScheme get colorScheme => Theme.of(this).colorScheme;
@@ -37,5 +38,12 @@ extension ListWidget on List<Widget> {
     }
 
     return result;
+  }
+}
+
+extension AppLocalizationsPlus on AppLocalizations {
+  String call(LocalisedMessage messages) {
+    final message = messages[localeName];
+    return message ?? messages["em"] ?? localeName;
   }
 }
